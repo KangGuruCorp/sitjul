@@ -113,7 +113,7 @@ export default function StudentLogin() {
             Portal Instrumen
           </h1>
           <h2 className="text-xs md:text-sm font-medium mb-4 leading-relaxed px-4 opacity-80">
-            (Pengaruh Lingkungan Belajar dan Efikasi Diri terhadap Kemampuan Penalaran Proporsional Matematika)
+            (Pengaruh Persepsi atas Model Pembelajaran dan Sikap Ilmiah terhadap Kemampuan Berpikir Kritis Ilmu Pengetahuan Alam)
           </h2>
           <div className="bg-white/10 rounded-2xl p-4 text-[10px] md:text-xs text-white/90 border border-white/5 leading-relaxed backdrop-blur-sm mx-4">
             <p>

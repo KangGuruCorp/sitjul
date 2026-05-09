@@ -7,7 +7,7 @@ import { db, auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { Users, BookOpen, CheckCircle, Download, LogOut, Edit, Eye, Trash2, Search, Filter, AlertTriangle, Sparkles, Zap, Wand2, Settings, Flag, Home, BrainCircuit, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 import * as XLSX from "xlsx";
-import { LINGKUNGAN_BELAJAR_Q, EFIKASI_DIRI_Q, TES_SOAL, ESSAY_QUESTIONS, ENV_NEGATIVE, EFI_NEGATIVE } from "@/lib/constants";
+import { PERSEPSI_MODEL_Q, SIKAP_ILMIAH_Q, ESSAY_QUESTIONS, ENV_NEGATIVE, EFI_NEGATIVE } from "@/lib/constants";
 
 interface Student {
     id: string;
@@ -30,7 +30,7 @@ export default function AdminDashboard() {
     const [gradingModal, setGradingModal] = useState<Student | null>(null);
     const [batchLoadingStudentId, setBatchLoadingStudentId] = useState<string | null>(null);
     const [scoreInput, setScoreInput] = useState<number | "">("");
-    const [activeView, setActiveView] = useState<"Rekap" | "Lingkungan" | "Efikasi" | "Evaluasi" | "Settings">("Rekap");
+    const [activeView, setActiveView] = useState<"Rekap" | "Persepsi" | "Sikap" | "Evaluasi" | "Settings">("Rekap");
     const [popover, setPopover] = useState<{ text: string, x: number, y: number, idx: number | string } | null>(null);
     const [sortConfig, setSortConfig] = useState<{ key: 'name' | 'lastUpdated'; direction: 'asc' | 'desc' } | null>(null);
 
@@ -97,161 +97,10 @@ export default function AdminDashboard() {
 
     const renderRespondentAnswer = (ans: string, qId?: number) => {
         if (!ans) return <p className="text-slate-400 italic">Tidak ada jawaban.</p>;
-
-        const isTable = ans.includes("[TABLE]");
-        const isLine = ans.includes("[LINE-T]") && ans.includes("[LINE-B]");
-        const hasReason = ans.includes("[REASON]");
-
-        let mainContent = ans;
-        let reasonPart = "";
-
-        if (hasReason) {
-            const parts = ans.split("[REASON]");
-            mainContent = parts[0];
-            reasonPart = parts[1]?.trim();
-        }
-
-        // Clean UI indicators
-        mainContent = mainContent.replace(/\[VISUAL:[A-Z]+\]/g, "");
-
-        if (isTable) {
-            const tableData = mainContent.replace("[TABLE]", "").trim();
-            const rows = tableData.split("|").map(r => r.trim().split(":"));
-
-            // Determine headers based on qId
-            let h1 = "Kolom 1", h2 = "Kolom 2";
-            if (qId === 6) { h1 = "Jumlah Cokelat (n)"; h2 = "Harga (Rp)"; }
-            if (qId === 7) { h1 = "Bahan Bakar (Liter)"; h2 = "Jarak (km)"; }
-
-            return (
-                <div className="space-y-4">
-                    <div className="overflow-hidden rounded-2xl border border-slate-200">
-                        <table className="w-full text-sm">
-                            <thead className="bg-slate-50 border-b border-slate-200">
-                                <tr>
-                                    <th className="p-3 text-center font-bold text-slate-600">{h1}</th>
-                                    <th className="p-3 text-center font-bold text-slate-600">{h2}</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-slate-100">
-                                {rows.map((row, idx) => (
-                                    <tr key={idx} className="hover:bg-slate-50/50">
-                                        <td className="p-3 text-center font-black text-primary text-lg">{row[0] || "-"}</td>
-                                        <td className="p-3 text-center font-bold text-slate-700 text-lg">
-                                            {qId === 6 ? `Rp ${row[1] || "-"}` : (row[1] || "-")}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                    {reasonPart && (
-                        <div className="p-4 bg-yellow-50 border-2 border-yellow-100 rounded-2xl">
-                            <span className="block text-[10px] font-black text-yellow-600 uppercase mb-1">Alasan Pemilihan:</span>
-                            <p className="text-sm text-slate-700 font-medium leading-relaxed">{reasonPart}</p>
-                        </div>
-                    )}
-                </div>
-            );
-        }
-
-        if (isLine) {
-            const tPart = mainContent.split("[LINE-T]")[1]?.split("[LINE-B]")[0]?.trim() || "";
-            const bPart = mainContent.split("[LINE-B]")[1]?.trim() || "";
-            const tArr = tPart.split("|");
-            const bArr = bPart.split("|");
-
-            return (
-                <div className="space-y-6">
-                    <div className="bg-white p-6 rounded-3xl border-2 border-slate-100 space-y-10">
-                        <div className="relative pt-8 pb-8">
-                            {/* Top Line */}
-                            <div className="h-1 bg-primary relative rounded-full flex justify-between items-center px-4">
-                                {tArr.map((v, i) => (
-                                    <div key={i} className="w-1.5 h-4 bg-primary rounded-full relative">
-                                        <div className="absolute -top-10 left-1/2 -translate-x-1/2 min-w-[30px] h-8 bg-slate-50 rounded-lg border border-slate-200 flex items-center justify-center px-2">
-                                            <span className="text-xs font-black text-primary">{v || "?"}</span>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            <span className="block text-[9px] font-black text-primary uppercase mt-1">Bahan Bakar (Liter)</span>
-
-                            {/* Bottom Line */}
-                            <div className="h-1 bg-slate-200 mt-16 relative rounded-full flex justify-between items-center px-4">
-                                {bArr.map((v, i) => (
-                                    <div key={i} className="w-1.5 h-4 bg-slate-300 rounded-full relative">
-                                        <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 min-w-[30px] h-8 bg-slate-50 rounded-lg border border-slate-200 flex items-center justify-center px-2">
-                                            <span className="text-xs font-black text-slate-600">{v || "?"}</span>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            <span className="block text-[9px] font-black text-slate-400 uppercase mt-12 text-right">Jarak (km)</span>
-                        </div>
-                    </div>
-                    {reasonPart && (
-                        <div className="p-4 bg-yellow-50 border-2 border-yellow-100 rounded-2xl">
-                            <span className="block text-[10px] font-black text-yellow-600 uppercase mb-1">Alasan Pemilihan:</span>
-                            <p className="text-sm text-slate-700 font-medium leading-relaxed">{reasonPart}</p>
-                        </div>
-                    )}
-                </div>
-            );
-        }
-
-        // GRID format (Question 5)
-        const isGrid = ans.includes("[GRID]");
-        if (isGrid) {
-            const gridData = ans.replace("[GRID]", "").trim();
-            const parts = gridData.split("|");
-            const s1C = parts.find(p => p.startsWith("S1:"))?.replace("S1:", "").trim() || "-";
-            const s1A = parts.find(p => p.startsWith("A1:"))?.replace("A1:", "").trim() || "-";
-            const s2C = parts.find(p => p.startsWith("S2:"))?.replace("S2:", "").trim() || "-";
-            const s2A = parts.find(p => p.startsWith("A2:"))?.replace("A2:", "").trim() || "-";
-
-            const situations = [
-                { id: 1, choice: s1C, reason: s1A, text: "Umur Risa (Situasi 1)" },
-                { id: 2, choice: s2C, reason: s2A, text: "Mesin Printer (Situasi 2)" }
-            ];
-
-            return (
-                <div className="overflow-hidden rounded-2xl border border-slate-200">
-                    <table className="w-full text-xs">
-                        <thead className="bg-slate-50 border-b border-slate-200">
-                            <tr>
-                                <th className="p-3 text-left font-bold text-slate-600">Situasi</th>
-                                <th className="p-3 text-center font-bold text-slate-600">Jenis Hubungan</th>
-                                <th className="p-3 text-left font-bold text-slate-600">Alasan</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-slate-100 bg-white">
-                            {situations.map(s => (
-                                <tr key={s.id} className="hover:bg-slate-50/50">
-                                    <td className="p-3 font-bold text-primary w-1/4">{s.text}</td>
-                                    <td className="p-3 text-center">
-                                        <span className={`px-2 py-1 rounded-full font-black text-[10px] ${s.choice === 'Proporsional' ? 'bg-emerald-100 text-emerald-700' : s.choice === 'Tidak Proporsional' ? 'bg-rose-100 text-rose-700' : 'bg-slate-100 text-slate-400'}`}>
-                                            {s.choice}
-                                        </span>
-                                    </td>
-                                    <td className="p-3 text-slate-600 font-medium italic">"{s.reason}"</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            );
-        }
-
+        
         return (
             <div className="space-y-4">
-                <p className="text-lg text-slate-700 leading-relaxed font-medium whitespace-pre-wrap">{mainContent}</p>
-                {reasonPart && (
-                    <div className="p-4 bg-yellow-50 border-2 border-yellow-100 rounded-2xl">
-                        <span className="block text-[10px] font-black text-yellow-600 uppercase mb-1">Alasan & Penjelasan tambahan:</span>
-                        <p className="text-sm text-slate-700 font-medium leading-relaxed">{reasonPart}</p>
-                    </div>
-                )}
+                <p className="text-lg text-slate-700 leading-relaxed font-medium whitespace-pre-wrap">{ans}</p>
             </div>
         );
     };
@@ -305,6 +154,7 @@ export default function AdminDashboard() {
         if (!angkets) return 0;
         return Object.entries(angkets).reduce((acc, [idx, val]) => {
             const index = Number(idx);
+            if (index === 40) return acc; // Skip trap item from score
             // Reverse scoring logic for negative items: point = 6 - original_value
             const score = negativeIndices.includes(index) ? (6 - val) : val;
             return acc + score;
@@ -314,22 +164,12 @@ export default function AdminDashboard() {
     const isStudentFinished = (s: Student) => {
         if (s.status_progres === 4) return true;
 
-        const angket1Done = s.angkets_1 && Object.keys(s.angkets_1).length >= 43;
+        const angket1Done = s.angkets_1 && Object.keys(s.angkets_1).length >= 41;
         const angket2Done = s.angkets_2 && Object.keys(s.angkets_2).length >= 41;
 
         // Check essay
         const essayAns = s.essay_answer || {};
-        const checkAnswered = (i: number, val: string) => {
-            const trimmed = (val || "").trim();
-            if (!trimmed) return false;
-            // Question 7 has special visual markers
-            if (i === 6) {
-                const clean = trimmed.replace(/\[VISUAL:.*?\]|\[TABLE\]|\[LINE-T\]|\[LINE-B\]|\[REASON\]|[:| \t\n\r]/g, "");
-                return clean.length > 0;
-            }
-            return trimmed.length > 0;
-        };
-        const essayDone = ESSAY_QUESTIONS.every((_, i) => checkAnswered(i, essayAns[i] || ""));
+        const essayDone = ESSAY_QUESTIONS.every((_, i) => (essayAns[i] || "").trim().length > 0);
 
         return angket1Done && angket2Done && essayDone;
     };
@@ -366,7 +206,7 @@ export default function AdminDashboard() {
         const essayScoreSum = Object.values(essayScores).reduce((a, b) => a + Number(b), 0);
         const essayFullText = typeof s.essay_answer === "string" ? s.essay_answer : Object.values(s.essay_answer || {}).map(v => String(v)).join(" ");
 
-        // === 1. WAKTU (-> Lingkungan) ===
+        // === 1. WAKTU (-> Persepsi) ===
         // 84+ soal skala + esai membutuhkan minimal beberapa menit
         if (s.completion_time_ms) {
             if (s.completion_time_ms < 180000) {
@@ -388,42 +228,42 @@ export default function AdminDashboard() {
             return variance;
         };
 
-        const var1 = checkVariance(s.angkets_1, 43);
+        const var1 = checkVariance(s.angkets_1, 41);
         const var2 = checkVariance(s.angkets_2, 41);
 
         if (var1 >= 0) {
             if (var1 < 0.3) {
                 statsEnv.monotone = "red";
-                issuesEnv.push(`Jawaban Monoton (Lingkungan): Variance = ${var1.toFixed(2)}. Hampir semua jawaban identik.`);
+                issuesEnv.push(`Jawaban Monoton (Persepsi Model): Variance = ${var1.toFixed(2)}. Hampir semua jawaban identik.`);
             } else if (var1 < 0.5) {
                 statsEnv.monotone = "yellow";
-                issuesEnv.push(`Variasi Rendah (Lingkungan): Variance = ${var1.toFixed(2)}. Jawaban cenderung seragam.`);
+                issuesEnv.push(`Variasi Rendah (Persepsi Model): Variance = ${var1.toFixed(2)}. Jawaban cenderung seragam.`);
             }
         }
 
         if (var2 >= 0) {
             if (var2 < 0.3) {
                 statsEfi.monotone = "red";
-                issuesEfi.push(`Jawaban Monoton (Efikasi): Variance = ${var2.toFixed(2)}. Hampir semua jawaban identik.`);
+                issuesEfi.push(`Jawaban Monoton (Sikap Ilmiah): Variance = ${var2.toFixed(2)}. Hampir semua jawaban identik.`);
             } else if (var2 < 0.5) {
                 statsEfi.monotone = "yellow";
-                issuesEfi.push(`Variasi Rendah (Efikasi): Variance = ${var2.toFixed(2)}. Jawaban cenderung seragam.`);
+                issuesEfi.push(`Variasi Rendah (Sikap Ilmiah): Variance = ${var2.toFixed(2)}. Jawaban cenderung seragam.`);
             }
         }
 
         // === 3. JEBAKAN (-> per instrumen) ===
-        // Lingkungan Q43 (idx 42): "pilih 'Tidak Setuju' (TS)" -> jawaban benar = 2
-        if (s.angkets_1 && s.angkets_1[42] !== undefined) {
-            if (s.angkets_1[42] !== 2) {
+        // Persepsi Q41 (idx 40): "pilih 'Tidak Setuju' (TS)" -> jawaban benar = 2
+        if (s.angkets_1 && s.angkets_1[40] !== undefined) {
+            if (s.angkets_1[40] !== 2) {
                 statsEnv.trap = "red";
-                issuesEnv.push(`Gagal Soal Jebakan (Lingkungan Q43): Menjawab ${s.angkets_1[42]}, seharusnya 2 (TS).`);
+                issuesEnv.push(`Gagal Soal Jebakan (Persepsi Model Q41): Menjawab ${s.angkets_1[40]}, seharusnya 2 (TS).`);
             }
         }
-        // Efikasi Q41 (idx 40): "pilihlah 'Sangat Setuju' (SS)" -> jawaban benar = 5
+        // Sikap Ilmiah Q41 (idx 40): "pilihlah 'Sangat Setuju' (SS)" -> jawaban benar = 5
         if (s.angkets_2 && s.angkets_2[40] !== undefined) {
             if (s.angkets_2[40] !== 5) {
                 statsEfi.trap = "red";
-                issuesEfi.push(`Gagal Soal Jebakan (Efikasi Q41): Menjawab ${s.angkets_2[40]}, seharusnya 5 (SS).`);
+                issuesEfi.push(`Gagal Soal Jebakan (Sikap Ilmiah Q41): Menjawab ${s.angkets_2[40]}, seharusnya 5 (SS).`);
             }
         }
 
@@ -431,12 +271,8 @@ export default function AdminDashboard() {
         // Pasangan positif-negatif dalam dimensi yang sama.
         // Kontradiksi = keduanya >= 4 (Setuju/Sangat Setuju padahal maknanya bertolak belakang)
 
-        // -- Lingkungan Belajar --
-        // Dim I: Q1 (idx 0, positif: udara sejuk) vs Q3 (idx 2, negatif: gerah)
-        // Dim II: Q9 (idx 8, positif: guru bimbing) vs Q11 (idx 10, negatif: guru abaikan)
-        // Dim II: Q13 (idx 12, positif: teman bantu) vs Q15 (idx 14, negatif: teman ejek)
-        // Dim IV: Q25 (idx 24, positif: semangat) vs Q27 (idx 26, negatif: cemas)
-        const envPairs = [[0, 2], [8, 10], [12, 14], [24, 26]];
+        // -- Persepsi atas Model Pembelajaran --
+        const envPairs = [[0, 4], [21, 25]];
         let logicEnvCount = 0;
         const logicEnvDetails: string[] = [];
         if (s.angkets_1) {
@@ -449,20 +285,16 @@ export default function AdminDashboard() {
                 }
             });
         }
-        if (logicEnvCount >= 3) {
+        if (logicEnvCount >= 2) {
             statsEnv.logic = "red";
-            issuesEnv.push(`Kontradiksi Logika Tinggi (Lingkungan): ${logicEnvCount} pasangan bertentangan (${logicEnvDetails.join(", ")})`);
+            issuesEnv.push(`Kontradiksi Logika Tinggi (Persepsi Model): ${logicEnvCount} pasangan bertentangan (${logicEnvDetails.join(", ")})`);
         } else if (logicEnvCount > 0) {
             statsEnv.logic = "yellow";
-            issuesEnv.push(`Kontradiksi Logika Ringan (Lingkungan): ${logicEnvCount} pasangan (${logicEnvDetails.join(", ")})`);
+            issuesEnv.push(`Kontradiksi Logika Ringan (Persepsi Model): ${logicEnvCount} pasangan (${logicEnvDetails.join(", ")})`);
         }
 
-        // -- Efikasi Diri --
-        // Dim I: Q1 (idx 0, positif: mampu soal mudah) vs Q6 (idx 5, negatif: langsung menyerah)
-        // Dim I: Q4 (idx 3, positif: percaya diri) vs Q8 (idx 7, negatif: ragu/cemas)
-        // Dim II: Q9 (idx 8, positif: keyakinan kuat) vs Q13 (idx 12, negatif: mudah putus asa)
-        // Dim III: Q17 (idx 16, positif: berlaku semua materi) vs Q23 (idx 22, negatif: belum mampu keseluruhan)
-        const efiPairs = [[0, 5], [3, 7], [8, 12], [16, 22]];
+        // -- Sikap Ilmiah --
+        const efiPairs = [[0, 2], [10, 14]];
         let logicEfiCount = 0;
         const logicEfiDetails: string[] = [];
         if (s.angkets_2) {
@@ -475,29 +307,29 @@ export default function AdminDashboard() {
                 }
             });
         }
-        if (logicEfiCount >= 3) {
+        if (logicEfiCount >= 2) {
             statsEfi.logic = "red";
-            issuesEfi.push(`Kontradiksi Logika Tinggi (Efikasi): ${logicEfiCount} pasangan bertentangan (${logicEfiDetails.join(", ")})`);
+            issuesEfi.push(`Kontradiksi Logika Tinggi (Sikap Ilmiah): ${logicEfiCount} pasangan bertentangan (${logicEfiDetails.join(", ")})`);
         } else if (logicEfiCount > 0) {
             statsEfi.logic = "yellow";
-            issuesEfi.push(`Kontradiksi Logika Ringan (Efikasi): ${logicEfiCount} pasangan (${logicEfiDetails.join(", ")})`);
+            issuesEfi.push(`Kontradiksi Logika Ringan (Sikap Ilmiah): ${logicEfiCount} pasangan (${logicEfiDetails.join(", ")})`);
         }
 
-        // === 5. SINKRONISASI / TRIANGULASI (-> Efikasi) ===
-        const envMax = 215; // 43 items * 5
-        const efiMax = 205; // 41 items * 5
+        // === 5. SINKRONISASI / TRIANGULASI (-> Sikap Ilmiah) ===
+        const envMax = 200; // 40 items * 5
+        const efiMax = 200; // 40 items * 5
         const envPct = envScore > 0 ? (envScore / envMax) * 100 : 0;
         const efiPct = efiScore > 0 ? (efiScore / efiMax) * 100 : 0;
 
         // Kedua skala tinggi tapi esai kosong/sangat pendek
         if (envPct > 80 && efiPct > 80 && (essayScoreSum === 0 || !essayFullText || essayFullText.length < 20)) {
             statsEfi.sync = "red";
-            issuesEfi.push(`Anomali Triangulasi: Skor skala tinggi (Lingk: ${envPct.toFixed(0)}%, Efik: ${efiPct.toFixed(0)}%) tapi esai kosong/sangat singkat.`);
+            issuesEfi.push(`Anomali Triangulasi: Skor skala tinggi (Persepsi: ${envPct.toFixed(0)}%, Sikap: ${efiPct.toFixed(0)}%) tapi esai kosong/sangat singkat.`);
         }
         // Perbedaan besar antar skala (> 30 poin persentase)
         else if (envPct > 0 && efiPct > 0 && Math.abs(envPct - efiPct) > 30) {
             statsEfi.sync = "yellow";
-            issuesEfi.push(`Inkonsistensi Antar-Skala: Gap ${Math.abs(envPct - efiPct).toFixed(0)} poin (Lingk: ${envPct.toFixed(0)}%, Efik: ${efiPct.toFixed(0)}%).`);
+            issuesEfi.push(`Inkonsistensi Antar-Skala: Gap ${Math.abs(envPct - efiPct).toFixed(0)} poin (Persepsi: ${envPct.toFixed(0)}%, Sikap: ${efiPct.toFixed(0)}%).`);
         }
 
         return { statsEnv, statsEfi, issuesEnv, issuesEfi };
@@ -520,41 +352,39 @@ export default function AdminDashboard() {
     const exportInstrumentBlueprint = () => {
         const blueprintHeader = ["No", "Butir Pernyataan", "Dimensi", "Favorabilitas (+/-)"];
 
-        // 1. Lingkungan Belajar
-        const envNegative = [2, 3, 6, 7, 10, 11, 14, 15, 18, 19, 22, 23, 26, 27, 30, 31, 34, 35, 40, 41, 42];
+        // 1. Persepsi atas Model Pembelajaran
         const envBlueprintData: any[] = [];
         let envGlobalIdx = 0;
-        LINGKUNGAN_BELAJAR_Q.forEach(dim => {
+        PERSEPSI_MODEL_Q.forEach(dim => {
             dim.qs.forEach(q => {
                 envBlueprintData.push([
                     envGlobalIdx + 1,
                     q,
                     dim.dimensi,
-                    envNegative.includes(envGlobalIdx) ? "(-)" : "(+)"
+                    ENV_NEGATIVE.includes(envGlobalIdx) ? "(-)" : "(+)"
                 ]);
                 envGlobalIdx++;
             });
         });
 
-        // 2. Efikasi Diri
-        const efiNegative = [4, 5, 6, 7, 12, 13, 14, 15, 20, 21, 22, 23, 28, 29, 30, 31, 36, 37, 38, 39, 40];
+        // 2. Sikap Ilmiah
         const efiBlueprintData: any[] = [];
         let efiGlobalIdx = 0;
-        EFIKASI_DIRI_Q.forEach(dim => {
+        SIKAP_ILMIAH_Q.forEach(dim => {
             dim.qs.forEach(q => {
                 efiBlueprintData.push([
                     efiGlobalIdx + 1,
                     q,
                     dim.dimensi,
-                    efiNegative.includes(efiGlobalIdx) ? "(-)" : "(+)"
+                    EFI_NEGATIVE.includes(efiGlobalIdx) ? "(-)" : "(+)"
                 ]);
                 efiGlobalIdx++;
             });
         });
 
         const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([blueprintHeader, ...envBlueprintData]), "Skala Lingkungan");
-        XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([blueprintHeader, ...efiBlueprintData]), "Skala Efikasi Diri");
+        XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([blueprintHeader, ...envBlueprintData]), "Skala Persepsi Model");
+        XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([blueprintHeader, ...efiBlueprintData]), "Skala Sikap Ilmiah");
 
         XLSX.writeFile(wb, "Blueprint_Pernyataan_Instrumen.xlsx");
     };
@@ -572,10 +402,10 @@ export default function AdminDashboard() {
             "Nama Sekolah",
             "Nomor HP",
             "Status",
-            "Skor Lingkungan",
-            "Skor Efikasi",
+            "Skor Persepsi",
+            "Skor Sikap",
             "Total Skor Esai (40)",
-            "Skor Akhir (100)",
+            "Skor Berpikir Kritis IPA (100)",
             "Hasil Validasi Sistem"
         ];
         const recapRows = students.map(s => [
@@ -591,17 +421,17 @@ export default function AdminDashboard() {
         ]);
         const wsRecap = XLSX.utils.aoa_to_sheet([recapHeaders, ...recapRows]);
 
-        // 2. Angket Lingkungan Belajar (Item breakdown - Transformed Points)
-        const envHeaders = ["Nama Lengkap", "Nama Sekolah", "Nomor HP", ...Array.from({ length: 43 }).map((_, i) => `Butir ${i + 1}${ENV_NEGATIVE.includes(i) ? " (-)" : " (+)"}`)];
+        // 2. Persepsi atas Model Pembelajaran (Item breakdown - Transformed Points)
+        const envHeaders = ["Nama Lengkap", "Nama Sekolah", "Nomor HP", ...Array.from({ length: 41 }).map((_, i) => `Butir ${i + 1}${ENV_NEGATIVE.includes(i) ? " (-)" : " (+)"}`)];
         const envRows = students.map(s => [
             s.name,
             s.school || "-",
             s.phone || "-",
-            ...Array.from({ length: 43 }).map((_, i) => getPoint(s.angkets_1?.[i], i, ENV_NEGATIVE) ?? "")
+            ...Array.from({ length: 41 }).map((_, i) => getPoint(s.angkets_1?.[i], i, ENV_NEGATIVE) ?? "")
         ]);
         const wsEnv = XLSX.utils.aoa_to_sheet([envHeaders, ...envRows]);
 
-        // 3. Angket Efikasi Diri (Item breakdown - Transformed Points)
+        // 3. Sikap Ilmiah (Item breakdown - Transformed Points)
         const efiHeaders = ["Nama Lengkap", "Nama Sekolah", "Nomor HP", ...Array.from({ length: 41 }).map((_, i) => `Butir ${i + 1}${EFI_NEGATIVE.includes(i) ? " (-)" : " (+)"}`)];
         const efiRows = students.map(s => [
             s.name,
@@ -636,9 +466,9 @@ export default function AdminDashboard() {
         // Build Workbook & Excecute Download
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, wsRecap, "Rekapitulasi Global");
-        XLSX.utils.book_append_sheet(wb, wsEnv, "Jawaban Lingkungan Belajar");
-        XLSX.utils.book_append_sheet(wb, wsEfi, "Jawaban Efikasi Diri");
-        XLSX.utils.book_append_sheet(wb, wsEssay, "Jawaban Tes Esai");
+        XLSX.utils.book_append_sheet(wb, wsEnv, "Skala Persepsi Model");
+        XLSX.utils.book_append_sheet(wb, wsEfi, "Skala Sikap Ilmiah");
+        XLSX.utils.book_append_sheet(wb, wsEssay, "Jawaban Berpikir Kritis IPA");
 
         XLSX.writeFile(wb, "Data_Penelitian_Analitik.xlsx");
     };
@@ -699,8 +529,8 @@ export default function AdminDashboard() {
     };
 
     const renderTableHeaders = () => {
-        const envQs = LINGKUNGAN_BELAJAR_Q.flatMap(d => d.qs);
-        const efiQs = EFIKASI_DIRI_Q.flatMap(d => d.qs);
+        const envQs = PERSEPSI_MODEL_Q.flatMap(d => d.qs);
+        const efiQs = SIKAP_ILMIAH_Q.flatMap(d => d.qs);
 
         const SortButton = ({ label, sortKey }: { label: string, sortKey: 'name' | 'lastUpdated' }) => (
             <button
@@ -716,14 +546,14 @@ export default function AdminDashboard() {
             </button>
         );
 
-        if (activeView === "Lingkungan") {
+        if (activeView === "Persepsi") {
             return (
                 <tr>
                     <th className="p-4 font-semibold text-left sticky left-0 bg-slate-50 z-20 shadow-[1px_0_0_0_#f1f5f9]">
                         <SortButton label="Nama Lengkap" sortKey="name" />
                     </th>
                     <th className="p-4 font-semibold text-center border-r border-slate-200 bg-slate-50 z-10">Total</th>
-                    {Array.from({ length: 43 }).map((_, i) => (
+                    {Array.from({ length: 41 }).map((_, i) => (
                         <th key={i}
                             onClick={(e) => { e.stopPropagation(); setPopover({ text: envQs[i], x: e.clientX, y: e.clientY, idx: i }); }}
                             className={`p-2 font-semibold text-center text-[10px] whitespace-nowrap min-w-[40px] cursor-pointer transition-colors ${popover?.idx === i ? 'bg-primary text-white ring-2 ring-primary ring-offset-1' : 'bg-slate-50 hover:bg-slate-200'}`}
@@ -733,7 +563,7 @@ export default function AdminDashboard() {
                 </tr>
             );
         }
-        if (activeView === "Efikasi") {
+        if (activeView === "Sikap") {
             return (
                 <tr>
                     <th className="p-4 font-semibold text-left sticky left-0 bg-slate-50 z-20 shadow-[1px_0_0_0_#f1f5f9]">
@@ -775,11 +605,11 @@ export default function AdminDashboard() {
                 <th className="p-4 font-semibold text-center">
                     <SortButton label="Waktu" sortKey="lastUpdated" />
                 </th>
-                <th className="p-4 font-semibold text-center">Kualitas Lingk.</th>
-                <th className="p-4 font-semibold text-center">Kualitas Efi.</th>
-                <th className="p-4 font-semibold text-center">Lingk.</th>
-                <th className="p-4 font-semibold text-center">Efi.</th>
-                <th className="p-4 font-semibold text-center">Esai</th>
+                <th className="p-4 font-semibold text-center">Kualitas Persepsi</th>
+                <th className="p-4 font-semibold text-center">Kualitas Sikap</th>
+                <th className="p-4 font-semibold text-center">Persepsi</th>
+                <th className="p-4 font-semibold text-center">Sikap</th>
+                <th className="p-4 font-semibold text-center">Esai IPA</th>
                 <th className="p-4 font-semibold text-center">Triangulasi</th>
                 <th className="p-4 font-semibold text-center">Aksi</th>
             </tr>
@@ -1191,22 +1021,22 @@ export default function AdminDashboard() {
                                 Rekap Global
                             </button>
                             <button
-                                onClick={() => setActiveView("Lingkungan")}
-                                className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${activeView === "Lingkungan" ? "bg-white text-primary shadow-sm ring-1 ring-slate-100" : "text-slate-500 hover:bg-slate-100"}`}
+                                onClick={() => setActiveView("Persepsi")}
+                                className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${activeView === "Persepsi" ? "bg-white text-primary shadow-sm ring-1 ring-slate-100" : "text-slate-500 hover:bg-slate-100"}`}
                             >
-                                Skala Lingkungan
+                                Skala Persepsi
                             </button>
                             <button
-                                onClick={() => setActiveView("Efikasi")}
-                                className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${activeView === "Efikasi" ? "bg-white text-primary shadow-sm ring-1 ring-slate-100" : "text-slate-500 hover:bg-slate-100"}`}
+                                onClick={() => setActiveView("Sikap")}
+                                className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${activeView === "Sikap" ? "bg-white text-primary shadow-sm ring-1 ring-slate-100" : "text-slate-500 hover:bg-slate-100"}`}
                             >
-                                Skala Efikasi
+                                Skala Sikap Ilmiah
                             </button>
                             <button
                                 onClick={() => setActiveView("Evaluasi")}
                                 className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${activeView === "Evaluasi" ? "bg-white text-primary shadow-sm ring-1 ring-slate-100" : "text-slate-500 hover:bg-slate-100"}`}
                             >
-                                Instrumen Tes
+                                Berpikir Kritis IPA
                             </button>
                         </div>
                     </div>
@@ -1300,12 +1130,12 @@ export default function AdminDashboard() {
                                         </tr>
                                     )}
                                     {sortedStudents.map((s) => {
-                                        if (activeView === "Lingkungan" || activeView === "Efikasi") {
-                                            const isEnv = activeView === "Lingkungan";
-                                            const len = isEnv ? 43 : 41;
+                                        if (activeView === "Persepsi" || activeView === "Sikap") {
+                                            const isEnv = activeView === "Persepsi";
+                                            const len = 41;
                                             const angkets = isEnv ? s.angkets_1 : s.angkets_2;
                                             const negIndices = isEnv ? ENV_NEGATIVE : EFI_NEGATIVE;
-                                            const qsList = isEnv ? LINGKUNGAN_BELAJAR_Q.flatMap(d => d.qs) : EFIKASI_DIRI_Q.flatMap(d => d.qs);
+                                            const qsList = isEnv ? PERSEPSI_MODEL_Q.flatMap(d => d.qs) : SIKAP_ILMIAH_Q.flatMap(d => d.qs);
                                             return (
                                                 <tr key={s.id} className="hover:bg-slate-50 transition-colors">
                                                     <td className="p-4 font-medium text-slate-800 sticky left-0 bg-white z-10 shadow-[1px_0_0_0_#f1f5f9] whitespace-nowrap">{s.name}</td>
@@ -1386,7 +1216,7 @@ export default function AdminDashboard() {
                                             );
                                         }
 
-                                        const envComplete = s.angkets_1 && Object.keys(s.angkets_1).length >= 43;
+                                        const envComplete = s.angkets_1 && Object.keys(s.angkets_1).length >= 41;
                                         const efiComplete = s.angkets_2 && Object.keys(s.angkets_2).length >= 41;
                                         const validation = analyzeRespondent(s);
 
@@ -1613,7 +1443,39 @@ export default function AdminDashboard() {
 
                                     <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 mb-4 italic text-sm text-slate-600">
                                         <span className="font-bold text-primary mr-2">SOAL {modalEssayIdx + 1}:</span>
-                                        {ESSAY_QUESTIONS[modalEssayIdx].text}
+                                        {(() => {
+                                            const q = ESSAY_QUESTIONS[modalEssayIdx];
+                                            if (q.image && q.text.includes("Perhatikan gambar")) {
+                                                const parts = q.text.split("\n\n");
+                                                return (
+                                                    <>
+                                                        <span className="font-bold">{parts[0]}</span>
+                                                        <div className="mt-2 mb-3 rounded-lg overflow-hidden border border-slate-200 bg-white">
+                                                            <img 
+                                                                src={q.image} 
+                                                                alt="Ilustrasi Soal" 
+                                                                className="w-full h-auto max-h-[180px] object-contain"
+                                                               />
+                                                        </div>
+                                                        <div className="whitespace-pre-wrap">{parts.slice(1).join("\n\n")}</div>
+                                                    </>
+                                                );
+                                            }
+                                            return (
+                                                <>
+                                                    {q.text}
+                                                    {q.image && (
+                                                        <div className="mt-3 rounded-lg overflow-hidden border border-slate-200">
+                                                            <img 
+                                                                src={q.image} 
+                                                                alt="Ilustrasi Soal" 
+                                                                className="w-full h-auto max-h-[200px] object-contain bg-white"
+                                                            />
+                                                        </div>
+                                                    )}
+                                                </>
+                                            );
+                                        })()}
                                     </div>
 
                                     <div className="bg-blue-50 text-slate-800 p-6 rounded-xl min-h-[150px] border border-blue-100 leading-relaxed mb-6 font-medium shadow-inner">
@@ -1650,9 +1512,9 @@ export default function AdminDashboard() {
                                             Data Triangulasi (Skala)
                                         </h3>
 
-                                        {renderAngketList("Lingkungan Belajar", calculateScore(gradingModal.angkets_1), 215, gradingModal.angkets_1, LINGKUNGAN_BELAJAR_Q, false)}
+                                        {renderAngketList("Persepsi Model Pembelajaran", calculateScore(gradingModal.angkets_1, ENV_NEGATIVE), 200, gradingModal.angkets_1, PERSEPSI_MODEL_Q, false)}
 
-                                        {renderAngketList("Efikasi Diri", calculateScore(gradingModal.angkets_2), 205, gradingModal.angkets_2, EFIKASI_DIRI_Q, true)}
+                                        {renderAngketList("Sikap Ilmiah", calculateScore(gradingModal.angkets_2, EFI_NEGATIVE), 200, gradingModal.angkets_2, SIKAP_ILMIAH_Q, true)}
 
                                     </div>
                                 </div>

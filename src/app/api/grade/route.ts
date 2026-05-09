@@ -20,7 +20,7 @@ export async function POST(req: Request) {
         const URL = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
         const prompt = `
-            Anda adalah pakar evaluasi pendidikan matematika. Tugas Anda adalah menilai jawaban siswa pada soal esai penalaran proporsional (0-4).
+            Anda adalah pakar evaluasi pendidikan Sains (IPA). Tugas Anda adalah menilai jawaban siswa pada soal esai Kemampuan Berpikir Kritis IPA (Skala 0-4).
 
             DATA SOAL:
             Teks Soal: "${questionText}"

@@ -71,11 +71,6 @@ export default function StudentDashboard() {
 
         const checkAnswered = (i: number, val: string) => {
             const trimmed = (val || "").trim();
-            if (!trimmed) return false;
-            if (i === 6) {
-                const clean = trimmed.replace(/\[VISUAL:.*?\]|\[TABLE\]|\[LINE-T\]|\[LINE-B\]|\[REASON\]|[:| \t\n\r]/g, "");
-                return clean.length > 0;
-            }
             return trimmed.length > 0;
         };
 
@@ -86,7 +81,7 @@ export default function StudentDashboard() {
             return ESSAY_QUESTIONS.every((_, i) => checkAnswered(i, ans[i] || ""));
         })();
 
-        if (angket1Ans === 43 && angket2Ans === 41 && isEssayDone && (studentData as any).status_progres !== 4) {
+        if (angket1Ans === 41 && angket2Ans === 41 && isEssayDone && (studentData as any).status_progres !== 4) {
             const docRef = doc(db, "students", sId);
             updateDoc(docRef, { status_progres: 4 }).catch(console.error);
         }
@@ -99,8 +94,8 @@ export default function StudentDashboard() {
     };
 
     const angket1Ans = studentData.angkets_1 ? Object.keys(studentData.angkets_1).length : 0;
-    const angket1Progress = (angket1Ans / 43) * 100;
-    const isAngket1Done = angket1Ans === 43;
+    const angket1Progress = (angket1Ans / 41) * 100;
+    const isAngket1Done = angket1Ans === 41;
 
     const angket2Ans = studentData.angkets_2 ? Object.keys(studentData.angkets_2).length : 0;
     const angket2Progress = (angket2Ans / 41) * 100;
@@ -113,11 +108,6 @@ export default function StudentDashboard() {
         // Use a consistent logic helper (inline for now)
         const checkAnswered = (i: number, val: string) => {
             const trimmed = (val || "").trim();
-            if (!trimmed) return false;
-            if (i === 6) { // Soal No 7
-                const clean = trimmed.replace(/\[VISUAL:.*?\]|\[TABLE\]|\[LINE-T\]|\[LINE-B\]|\[REASON\]|[:| \t\n\r]/g, "");
-                return clean.length > 0;
-            }
             return trimmed.length > 0;
         };
 
@@ -133,17 +123,13 @@ export default function StudentDashboard() {
 
         const checkAnswered = (i: number, val: string) => {
             const trimmed = (val || "").trim();
-            if (!trimmed) return false;
-            if (i === 6) { // Soal No 7
-                const clean = trimmed.replace(/\[VISUAL:.*?\]|\[TABLE\]|\[LINE-T\]|\[LINE-B\]|\[REASON\]|[:| \t\n\r]/g, "");
-                return clean.length > 0;
-            }
             return trimmed.length > 0;
         };
 
         if (typeof ans === "string") return checkAnswered(0, ans) ? 100 : 0;
 
         const answeredCount = ESSAY_QUESTIONS.filter((_, i) => checkAnswered(i, ans[i] || "")).length;
+        if (ESSAY_QUESTIONS.length === 0) return 0;
         return (answeredCount / ESSAY_QUESTIONS.length) * 100;
     })();
 
@@ -161,7 +147,7 @@ export default function StudentDashboard() {
                                 </h1>
                                 <p className="text-slate-500 font-medium">Portal Instrumen Penelitian</p>
                                 <p className="text-[10px] md:text-xs text-slate-400 font-medium leading-relaxed mt-1 italic">
-                                    (Pengaruh Lingkungan Belajar dan Efikasi Diri terhadap Kemampuan Penalaran Proporsional Matematika)
+                                    (Pengaruh Persepsi atas Model Pembelajaran dan Sikap Ilmiah terhadap Kemampuan Berpikir Kritis IPA)
                                 </p>
                             </div>
                             <div className="flex items-center gap-3">
@@ -220,12 +206,12 @@ export default function StudentDashboard() {
                                 <ClipboardList className="w-6 h-6" />
                             </div>
                             <div className="text-left flex-1">
-                                <h3 className="font-bold text-slate-800 text-lg">1. Skala Lingkungan Belajar</h3>
+                                <h3 className="font-bold text-slate-800 text-lg">1. Skala Persepsi atas model pembelajaran</h3>
                                 <p className="text-slate-500 text-sm">Berisi pertanyaan skala sikap 1-5.</p>
                                 <div className="w-full bg-slate-100 h-2 rounded-full mt-3 overflow-hidden">
                                     <div className={`h-full ${isAngket1Done ? 'bg-green-500' : 'bg-primary'} transition-all duration-500`} style={{ width: `${angket1Progress}%` }}></div>
                                 </div>
-                                <p className="text-xs text-slate-400 mt-1 font-medium">{angket1Ans} / 43 terjawab</p>
+                                <p className="text-xs text-slate-400 mt-1 font-medium">{angket1Ans} / 41 terjawab</p>
                             </div>
                         </div>
                         {isAngket1Done ? (
@@ -246,8 +232,8 @@ export default function StudentDashboard() {
                                 <ClipboardList className="w-6 h-6" />
                             </div>
                             <div className="text-left flex-1">
-                                <h3 className="font-bold text-slate-800 text-lg">2. Skala Efikasi Diri</h3>
-                                <p className="text-slate-500 text-sm">Berisi pertanyaan tingkat keyakinan diri.</p>
+                                <h3 className="font-bold text-slate-800 text-lg">2. Skala Sikap Ilmiah</h3>
+                                <p className="text-slate-500 text-sm">Berisi pertanyaan tentang sikap ilmiah.</p>
                                 <div className="w-full bg-slate-100 h-2 rounded-full mt-3 overflow-hidden">
                                     <div className={`h-full ${isAngket2Done ? 'bg-green-500' : 'bg-amber-500'} transition-all duration-500`} style={{ width: `${angket2Progress}%` }}></div>
                                 </div>
@@ -272,8 +258,8 @@ export default function StudentDashboard() {
                                 <BrainCircuit className="w-6 h-6" />
                             </div>
                             <div className="text-left flex-1">
-                                <h3 className="font-bold text-slate-800 text-lg">3. Tes Penalaran Proporsional</h3>
-                                <p className="text-slate-500 text-sm">Soal uraian essay matematika.</p>
+                                <h3 className="font-bold text-slate-800 text-lg">3. Berpikir Kritis IPA</h3>
+                                <p className="text-slate-500 text-sm">Soal uraian essay IPA.</p>
                                 <div className="w-full bg-slate-100 h-2 rounded-full mt-3 overflow-hidden">
                                     <div className={`h-full ${isEssayDone ? 'bg-green-500' : 'bg-purple-500'} transition-all duration-500`} style={{ width: `${essayProgress}%` }}></div>
                                 </div>

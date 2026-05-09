@@ -1,149 +1,193 @@
 export type DimensionGroup = { dimensi: string; qs: string[] };
 
 // Negative item indices (0-indexed) for scoring
-export const ENV_NEGATIVE = [2, 3, 6, 7, 10, 11, 14, 15, 18, 19, 22, 23, 26, 27, 30, 31, 34, 35, 40, 41, 42];
+// Negative item indices (0-indexed) for scoring
+export const ENV_NEGATIVE = [3, 4, 5, 9, 10, 11, 15, 16, 20, 21, 25, 26, 27, 29, 31, 34, 35, 38, 39];
 
-export const LINGKUNGAN_BELAJAR_Q: DimensionGroup[] = [
+export const PERSEPSI_MODEL_Q: DimensionGroup[] = [
     {
-        dimensi: "Dimensi I: Kenyamanan Fisik",
+        dimensi: "Ketertarikan Belajar",
         qs: [
-            "Ruang kelas memiliki sirkulasi udara yang sejuk.",
-            "Saya menggunakan kursi yang nyaman saat belajar matematika.",
-            "Suasana ruang kelas terasa gerah saat jam pelajaran matematika.",
-            "Bangku di kelas dalam kondisi rusak.",
-            "Lantai ruang kelas terlihat bersih.",
-            "Saya menyimpan barang bawaan dengan aman di laci meja kelas.",
-            "Sampah berserakan di sekitar meja saat belajar matematika.",
-            "Saya merasa khawatir kehilangan barang pribadi di dalam kelas."
+            "Saya merasa tertarik mengikuti pelajaran yang disampaikan oleh guru",
+            "Pembelajaran di kelas mendorong saya untuk mengetahui lebih banyak tentang materi pelajaran.",
+            "Cara guru mengajar mampu menarik perhatian saya selama pembelajaran",
+            "Kegiatan belajar di kelas terasa membosankan",
+            "Saya kurang tertarik dengan Pelajaran yang disampaikan guru.",
+            "Saya mudah kehilangan minat saat pembelajaran berlangsung"
         ]
     },
     {
-        dimensi: "Dimensi II: Dukungan Sosial dan Interaksi",
+        dimensi: "Motivasi Belajar",
         qs: [
-            "Guru matematika memberikan bimbingan saat saya mengalami kesulitan.",
-            "Guru matematika mendengarkan pertanyaan saya dengan ramah.",
-            "Guru matematika mengabaikan saya saat saya bertanya.",
-            "Guru matematika membentak siswa yang lambat memahami materi.",
-            "Teman sekelas membantu saya memahami soal matematika yang rumit.",
-            "Saya berdiskusi dengan teman kelompok untuk memecahkan masalah matematika.",
-            "Teman sekelas mengejek jawaban saya yang keliru.",
-            "Saya mengerjakan tugas kelompok matematika sendirian."
+            "Model pembelajaran yang digunakan guru membuat saya lebih semangat belajar",
+            "Saya merasa termotivasi untuk belajar lebih giat di kelas",
+            "Saya memiliki dorongan untuk aktif belajar selama pembelajaran berlangsung",
+            "Saya merasa kurang semangat saat mengikuti pembelajaran di kelas",
+            "Model pembelajaran yang digunakan guru membuat saya kurang termotivasi untuk belajar",
+            "Saya kurang memiliki dorongan untuk berpartisipasi aktif dalam pembelajaran"
         ]
     },
     {
-        dimensi: "Dimensi III: Iklim Akademis",
+        dimensi: "Pemahaman Materi",
         qs: [
-            "Guru matematika memberikan target penyelesaian tugas yang jelas.",
-            "Saya mendapatkan tugas matematika yang memicu rasa ingin tahu.",
-            "Guru matematika memberikan soal latihan yang membosankan.",
-            "Arahan tugas matematika dari guru membingungkan saya.",
-            "Guru matematika membebaskan saya mencari cara penyelesaian sendiri.",
-            "Saya melakukan percobaan langsung untuk memahami rumus matematika.",
-            "Guru matematika mewajibkan saya menggunakan satu cara penyelesaian baku.",
-            "Pembelajaran matematika di kelas terasa kaku."
+            "Model pembelajaran membantu saya memahami materi pelajaran",
+            "Saya dapat memahami materi pelajaran dengan baik saat pembelajaran berlangsung",
+            "Penjelasan guru membantu saya memahami konsep pelajaran dengan jelas",
+            "Saya masih mengalami kesulitan memahami pelajaran meskipun sudah dijelaskan",
+            "Contoh yang diberikan guru kurang membantu saya memahami materi"
         ]
     },
     {
-        dimensi: "Dimensi IV: Dukungan Emosional-Psikologis",
+        dimensi: "Keaktifan Belajar",
         qs: [
-            "Saya merasa bersemangat mengikuti pelajaran matematika di kelas.",
-            "Suasana kelas membuat saya yakin bisa menyelesaikan soal matematika.",
-            "Saya merasa cemas saat jam pelajaran matematika dimulai.",
-            "Sikap teman-teman membuat saya pesimis dalam belajar matematika.",
-            "Saya bebas menyampaikan ide penyelesaian soal di depan kelas.",
-            "Lingkungan kelas memberikan ketenangan saat saya mengerjakan ujian matematika.",
-            "Saya merasa takut saat hendak menyampaikan pendapat di kelas matematika.",
-            "Suasana kelas membuat saya tertekan saat belajar matematika."
+            "Saya berani bertanya ketika ada materi yang belum saya pahami",
+            "Saya aktif bertanya saat pembelajaran berlangsung.",
+            "Saya terlibat dalam diskusi kelompok saat pembelajaran berlangsung.",
+            "Saya cenderung pasif ketika bekerja dalam kelompok",
+            "Saya jarang berpartisipasi dalam kegiatan belajar di kelas"
         ]
     },
     {
-        dimensi: "Dimensi V: Ketersediaan Sumber Belajar",
+        dimensi: "Media Pembelajaran",
         qs: [
-            "Sekolah menyediakan alat peraga matematika yang memadai.",
-            "Saya meminjam buku paket matematika dari perpustakaan sekolah.",
-            "Buku paket matematika di perpustakaan sangat usang.",
-            "Alat peraga matematika di sekolah dalam kondisi rusak.",
-            "Guru matematika menampilkan video pembelajaran yang menarik.",
-            "Saya membaca modul matematika dengan bahasa yang mudah dipahami.",
-            "Saya menggunakan perangkat teknologi dari sekolah (seperti laptop atau tablet) untuk pembelajaran.",
-            "Saya memanfaatkan aplikasi pembelajaran matematika yang disediakan sekolah untuk mendalami materi yang sulit.",
-            "Sumber belajar matematika yang ada di sekolah sulit saya akses saat dibutuhkan.",
-            "Fasilitas teknologi di sekolah terabaikan dalam mendukung pembelajaran matematika saya.",
+            "Guru menggunakan berbagai media pembelajaran seperti gambar atau video",
+            "Penggunaan media pembelajaran membantu saya memahami materi",
+            "Saya lebih mudah memahami pelajaran ketika guru menggunakan media pembelajaran",
+            "Guru jarang menggunakan media pembelajaran",
+            "Penggunaan media pembelajaran terkadang membuat saya kurang memahami materi.",
+            "Saya kurang memahami materi meskipun menggunakan media pembelajaran."
+        ]
+    },
+    {
+        dimensi: "Metode Pembelajaran",
+        qs: [
+            "Guru menggunakan berbagai metode pembelajaran yang membuat siswa lebih aktif dan antusias belajar.",
+            "Guru jarang menggunakan metode pembelajaran yang bervariasi sehingga siswa cepat merasa bosan.",
+            "Variasi strategi pembelajaran yang diterapkan guru membantu siswa memahami materi dengan lebih mudah.",
+            "Strategi pembelajaran yang digunakan guru kurang menarik dan tidak sesuai dengan kebutuhan siswa."
+        ]
+    },
+    {
+        dimensi: "Hasil Belajar",
+        qs: [
+            "Pembelajaran di kelas membantu meningkatkan pengetahuan saya",
+            "Saya merasa kemampuan saya berkembang setelah mengikuti pembelajaran",
+            "Nilai hasil belajar saya belum mengalami peningkatan",
+            "Pembelajaran kurang membantu meningkatkan kemampuan saya"
+        ]
+    },
+    {
+        dimensi: "Kepuasan Belajar",
+        qs: [
+            "Saya merasa puas dengan proses pembelajaran di kelas",
+            "Saya menikmati proses pembelajaran yang berlangsung di kelas.",
+            "Saya merasa pembelajaran di kelas kurang bermanfaat bagi kehidupan saya.",
+            "Cara guru mengajar membuat saya kurang nyaman dalam belajar."
+        ]
+    },
+    {
+        dimensi: "Kejujuran Respon",
+        qs: [
             "Sebagai pengecekan konsentrasi membaca, mohon pilih opsi 'Tidak Setuju' (TS) untuk pernyataan ini."
         ]
     }
 ];
 
-export const EFIKASI_DIRI_Q: DimensionGroup[] = [
+export const SIKAP_ILMIAH_Q: DimensionGroup[] = [
     {
-        dimensi: "Dimensi I: Magnitudo (Tingkat Kesulitan)",
+        dimensi: "Rasa Ingin Tahu",
         qs: [
-            "Saya mampu menyelesaikan soal matematika yang mudah.",
-            "Saya mampu mengerjakan soal matematika tingkat sedang meski memerlukan waktu lebih.",
-            "Saya mampu menyelesaikan soal matematika yang paling sulit setelah berpikir keras.",
-            "Saya percaya diri bahwa saya bisa memahami setiap materi matematika yang diajarkan.",
-            "Saya belum mampu mengerjakan soal-soal yang sulit.",
-            "Ketika bertemu soal yang rumit, saya langsung menyerah tanpa mencoba.",
-            "Soal matematika yang kompleks membuat saya merasa putus asa.",
-            "Saya merasa ragu dan cemas jika diminta mengerjakan soal evaluasi di depan kelas."
+            "Saya ingin mengetahui penyebab suatu peristiwa yang dipelajari",
+            "Saya kurang terdorong untuk mencari informasi tambahan",
+            "Saya merasa tertarik untuk bertanya tentang materi yang belum dipahami",
+            "Saya jarang mengajukan pertanyaan saat pembelajaran"
         ]
     },
     {
-        dimensi: "Dimensi II: Kekuatan (Stabilitas Keyakinan)",
+        dimensi: "Ketertarikan Eksperimen",
         qs: [
-            "Keyakinan saya terhadap kemampuan matematika tetap kuat meskipun saya pernah gagal.",
-            "Saya pantang menyerah walaupun menghadapi kesulitan dalam belajar matematika.",
-            "Saat saya mendapat nilai buruk, saya masih percaya bisa meningkatkan prestasi.",
-            "Kegagalan dalam matematika membuat saya semakin bersemangat untuk belajar.",
-            "Saya mudah putus asa ketika menghadapi soal yang belum pernah saya temui sebelumnya.",
-            "Ketika mendapat kritik dari guru, membuat saya kurang percaya diri.",
-            "Kesulitan kecil membuat saya ragu dengan kemampuan matematika saya.",
-            "Saya mudah terpengaruh oleh keraguan meskipun sebelumnya saya percaya diri."
+            "Saya tertarik mengikuti kegiatan eksperimen atau percobaan",
+            "Saya enggan terlibat dalam kegiatan eksperimen"
         ]
     },
     {
-        dimensi: "Dimensi III: Generalitas (Keluasan Keyakinan)",
+        dimensi: "Sikap Objektif",
         qs: [
-            "Keyakinan saya terhadap kemampuan matematika berlaku di semua materi.",
-            "Saya percaya diri dalam menyelesaikan soal aljabar maupun geometri.",
-            "Saya percaya diri bahwa saya menguasai semua topik dalam matematika.",
-            "Saya yakin kemampuan matematika saya membantu pemahaman pada mata pelajaran IPA.",
-            "Saya merasa lebih mampu di satu materi matematika dibandingkan materi lain.",
-            "Keyakinan saya hanya berlaku pada soal-soal rutin saja.",
-            "Saya merasa belum mampu dalam matematika secara keseluruhan.",
-            "Saya merasa cemas saat harus menggunakan perhitungan matematika pada pelajaran fisika."
+            "Saya menilai sesuatu berdasarkan fakta yang ada",
+            "Saya jarang menggunakan data dalam menyimpulkan",
+            "Saya berusaha tidak langsung menyimpulkan tanpa bukti",
+            "Saya kurang mempertimbangkan informasi sebelum menyimpulkan",
+            "Saya menyampaikan pendapat dengan didukung bukti",
+            "Saya jarang memberikan alasan saat berpendapat"
         ]
     },
     {
-        dimensi: "Dimensi IV: Efikasi Pemahaman Konsep Matematika",
+        dimensi: "Berpikir Kritis",
         qs: [
-            "Saya percaya diri dapat memahami konsep-konsep matematika yang baru diajarkan.",
-            "Saya mampu menghubungkan konsep baru dengan pengetahuan yang sudah saya punya.",
-            "Saya percaya diri dapat menjelaskan konsep matematika kepada teman.",
-            "Saya memahami mengapa suatu rumus atau konsep matematika itu bekerja.",
-            "Saya merasa kesulitan memahami konsep-konsep abstrak dalam matematika.",
-            "Konsep-konsep baru dalam matematika membuat saya merasa bingung dan kurang percaya diri.",
-            "Saya sulit mengingat dan menggunakan rumus-rumus matematika dengan benar.",
-            "Saya merasa kesulitan jika diminta menjelaskan ulang konsep matematika dengan kata-kata saya sendiri."
+            "Saya memikirkan hubungan sebab-akibat suatu peristiwa",
+            "Saya kesulitan menganalisis informasi secara logis",
+            "Saya ingin mengetahui alasan di balik suatu konsep",
+            "Saya hanya menerima informasi tanpa ingin tahu lebih jauh",
+            "Saya memeriksa kebenaran informasi sebelum mempercayainya",
+            "Saya jarang membandingkan informasi dari sumber lain"
         ]
     },
     {
-        dimensi: "Dimensi V: Efikasi Penalaran Proporsional",
+        dimensi: "Sikap Terbuka",
         qs: [
-            "Saya percaya diri dapat menyelesaikan soal perbandingan dan proporsi.",
-            "Saya mampu membedakan antara perbandingan senilai dan perbandingan berbalik nilai.",
-            "Saya percaya diri menggunakan strategi yang tepat dalam menyelesaikan masalah proporsi.",
-            "Saya dapat menerapkan konsep rasio dan proporsi dalam masalah kehidupan sehari-hari.",
-            "Soal tentang skala, persentase, dan kecepatan membuat saya bingung dan kurang percaya diri.",
-            "Saya mengalami kesulitan ketika harus memilih strategi yang tepat untuk masalah proporsi.",
-            "Saya sulit memahami hubungan multiplikatif dalam masalah perbandingan.",
-            "Saya sering keliru saat menerjemahkan soal cerita perbandingan ke dalam bentuk matematika.",
+            "Saya menghargai pendapat yang berbeda",
+            "Saya sering mengabaikan pendapat teman",
+            "Saya bersedia mengubah pendapat jika ada bukti baru",
+            "Saya kurang terbuka terhadap informasi baru",
+            "Saya menghargai perbedaan pandangan dalam diskusi",
+            "Saya merasa terganggu dengan pendapat yang berbeda"
+        ]
+    },
+    {
+        dimensi: "Ketekunan",
+        qs: [
+            "Saya tidak mudah menyerah dalam menyelesaikan tugas",
+            "Saya berhenti mencoba ketika mengalami kegagalan",
+            "Saya mengerjakan tugas secara teratur",
+            "Saya kurang konsisten dalam belajar"
+        ]
+    },
+    {
+        dimensi: "Ketelitian",
+        qs: [
+            "Saya memeriksa kembali hasil pekerjaan saya",
+            "Saya sering melakukan kesalahan karena kurang teliti"
+        ]
+    },
+    {
+        dimensi: "Kerja Sama",
+        qs: [
+            "Saya aktif dalam kegiatan kerja kelompok",
+            "Saya kurang berpartisipasi dalam diskusi kelompok",
+            "Saya menghargai hasil kerja teman",
+            "Saya sering mengabaikan pendapat anggota kelompok",
+            "Saya bertanggung jawab terhadap tugas kelompok",
+            "Saya mengabaikan tugas yang diberikan"
+        ]
+    },
+    {
+        dimensi: "Disiplin",
+        qs: [
+            "Saya mengikuti instruksi guru dengan baik",
+            "Saya mengabaikan tata tertib pembelajaran",
+            "Saya mengatur waktu belajar dengan baik",
+            "Saya sering terlambat mengumpulkan tugas"
+        ]
+    },
+    {
+        dimensi: "Kejujuran Respon",
+        qs: [
             "Sekadar untuk memastikan Anda tetap fokus, pilihlah 'Sangat Setuju' (SS) pada baris ini."
         ]
     }
 ];
 
-export const EFI_NEGATIVE = [4, 5, 6, 7, 12, 13, 14, 15, 20, 21, 22, 23, 28, 29, 30, 31, 36, 37, 38, 39, 40];
+export const EFI_NEGATIVE = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39];
 
 export interface EssayQuestion {
     id: number;
@@ -152,126 +196,130 @@ export interface EssayQuestion {
     subject: string;
     cognitiveLevel: string;
     rubric: string[];
+    image?: string;
 }
 
 export const ESSAY_QUESTIONS: EssayQuestion[] = [
     {
         id: 1,
-        text: "Budi membuat minuman susu cokelat dengan mencampurkan 2 sendok bubuk cokelat ke dalam 150 ml susu. Jika Budi ingin membuat porsi yang lebih besar menggunakan 300 ml susu dengan tingkat kepekatan dan rasa yang sama, jelaskan kuantitas apa saja yang berubah dan kuantitas apa yang tetap!",
-        indicator: "Memahami Kovariasi",
-        subject: "Rasio",
+        text: "Perhatikan jalur udara saat kita menarik napas. Sebutkan organ-organ pernapasan yang dilewati udara secara berurutan mulai dari hidung hingga mencapai paru-paru! Mengapa urutan ini tidak boleh tertukar dalam menjalankan fungsinya?\n\nPerintah:\nSebutkan informasi utama dari hasil pengamatan tersebut!",
+        indicator: "Interpretasi",
+        subject: "IPA",
         cognitiveLevel: "C2",
         rubric: [
-            "Kuantitas yang berubah: Volume susu dan jumlah takaran bubuk cokelat.",
-            "Kuantitas yang tetap: Rasio atau tingkat kepekatan rasa cokelat.",
-            "Penjelasan: Karena volume susu bertambah, maka bubuk cokelat juga harus ditambah agar rasanya tetap sama."
+            "Hidung -> Faring -> Laring -> Trakea -> Bronkus -> Bronkiolus -> Alveolus.",
+            "Urutan tidak boleh tertukar karena setiap organ memiliki fungsi pengkondisian udara progresif (menyaring, melembabkan, menghangatkan).",
+            "Jika tertukar, udara kotor atau bersuhu ekstrem dapat merusak jaringan paru-paru."
         ]
     },
     {
         id: 2,
-        text: "Sebuah mesin penggiling dapat mengolah 10 kg biji cokelat dalam waktu 8 jam. Apabila jumlah biji cokelat yang akan digiling ditambah, jelaskan apakah waktu yang dibutuhkan mesin akan semakin lama atau semakin cepat! Berikan alasannya.",
-        indicator: "Memahami Kovariasi",
-        subject: "Rasio",
-        cognitiveLevel: "C4",
+        text: "Seringkali orang menganggap bahwa 'bernapas' sama dengan 'respirasi seluler'. Jelaskan perbedaan mendasar antara keduanya dan bagaimana kedua proses tersebut saling mendukung dalam menghasilkan energi bagi tubuh!\n\nPerintah:\nJelaskan makna dari kedua hasil pengukuran tersebut!",
+        indicator: "Eksplanasi",
+        subject: "IPA",
+        cognitiveLevel: "C2",
         rubric: [
-            "Waktu yang dibutuhkan akan semakin lama.",
-            "Alasan: Jumlah barang yang diproses berbanding lurus dengan waktu pengerjaan (semakin banyak barang, semakin lama waktunya)."
+            "Bernapas (Ventilasi): Proses mekanis menghirup O2 dan menghembuskan CO2.",
+            "Respirasi Seluler: Proses kimiawi di dalam mitokondria sel untuk memecah glukosa menggunakan oksigen guna menghasilkan energi (ATP).",
+            "Hubungan: Bernapas menyediakan bahan baku (O2) yang dibutuhkan sel, sementara respirasi seluler adalah tujuan akhir mengapa kita bernapas."
         ]
     },
     {
         id: 3,
-        text: "Saat ini, umur Kakak adalah 12 tahun dan umur Adik adalah 8 tahun sehingga perbandingan umur mereka adalah 3 : 2. Apakah pada 4 tahun yang akan datang perbandingan umur mereka tetap 3 : 2? Jelaskan alasanmu!",
-        indicator: "Mengidentifikasi Hubungan Proporsional",
-        subject: "Rasio",
-        cognitiveLevel: "C2",
+        text: "Saat seseorang mengalami tersedak, jalur pernapasan terganggu. Analisislah peran epiglotis dalam sistem pernapasan dan pencernaan! Apa yang terjadi pada tekanan udara di paru-paru jika epiglotis gagal menutup saat kita menelan makanan?\n\nPerintah:\nAnalisislah perubahan yang terjadi dan jelaskan penyebabnya!",
+        indicator: "Analisis",
+        subject: "IPA",
+        cognitiveLevel: "C4",
         rubric: [
-            "Tidak tetap. Empat tahun mendatang, umur Kakak menjadi 16 tahun dan Adik menjadi 12 tahun (perbandingan 4:3).",
-            "Alasan: Hubungan umur merupakan perbandingan selisih (aditif), bukan perbandingan senilai (proporsional)."
+            "Epiglotis berfungsi sebagai katup yang menutup trakea saat menelan agar makanan masuk ke esofagus.",
+            "Jika gagal, makanan masuk ke saluran napas (tersedak), mengganggu aliran udara.",
+            "Menyebabkan tekanan udara paru tidak stabil karena sumbatan benda asing."
         ]
     },
     {
         id: 4,
-        text: "Dua minggu lalu, tinggi tanaman tomat adalah 8 cm dan cabai 12 cm. Hari ini, tinggi tomat mencapai 11 cm dan cabai mencapai 15 cm. Tanaman manakah yang pertumbuhannya lebih pesat terhadap tinggi asalnya? Jelaskan alasanmu!",
-        indicator: "Mengidentifikasi Hubungan Proporsional",
-        subject: "Rasio",
+        text: "Bandingkan mekanisme pernapasan dada dan pernapasan perut. Jika otot diafragma seseorang mengalami kelumpuhan, analisislah dampaknya terhadap proses ekspirasi dan volume udara yang dapat dikeluarkan!\n\nPerintah:\nAnalisislah perubahan yang terjadi dan jelaskan penyebabnya!",
+        indicator: "Analisis",
+        subject: "IPA",
         cognitiveLevel: "C4",
         rubric: [
-            "Tanaman Tomat.",
-            "Alasan: Berdasarkan perbandingan terhadap tinggi awal, tomat tumbuh sebesar 3/8 (37,5%), sedangkan cabai hanya tumbuh sebesar 3/12 (25%)."
+            "Dampak kelumpuhan diafragma: Pernapasan perut terganggu.",
+            "Ekspirasi menjadi sulit dan tidak maksimal karena diafragma tidak bisa relaksasi/melengkung ke atas untuk mendorong udara keluar.",
+            "Volume udara sisa meningkat dan kapasitas vital menurun."
         ]
     },
     {
         id: 5,
-        text: "Bacalah dua situasi di bawah ini dengan saksama, kelompokkanlah setiap situasi ke dalam jenis hubungan yang tepat (Proporsional atau Tidak Proporsional) dan berikan alasannya.",
-        indicator: "Mengidentifikasi Hubungan Proporsional",
-        subject: "Rasio (Bab 3 SMP)",
-        cognitiveLevel: "C3",
+        text: "Di daerah kutub yang bersuhu dingin, penduduknya tetap bisa bernapas dengan aman tanpa paru-parunya membeku. Simpulkan fungsi spesifik rambut hidung, lendir, dan pembuluh darah kapiler dalam mengondisikan udara tersebut!\n\nPerintah:\nNilailah pernyataan tersebut dan berikan alasan ilmiah yang mendukung jawabanmu!",
+        indicator: "Inferensi",
+        subject: "IPA",
+        cognitiveLevel: "C4",
         rubric: [
-            "Situasi 1: Bukan Hubungan Proporsional. Alasan: Selisih umur selalu tetap (4 tahun), tetapi rasionya berubah (14:10 menjadi 19:15). Menggunakan pemikiran aditif.",
-            "Situasi 2: Hubungan Proporsional. Alasan: Berlaku kelipatan konstan. Waktu bertambah 3x lipat, hasil cetakan juga bertambah 3x lipat (Rasio tetap 15 lembar/menit)."
+            "Rambut hidung: menyaring debu/partikel.",
+            "Lendir: melembabkan udara.",
+            "Kapiler: menghangatkan udara agar sesuai suhu tubuh.",
+            "Ketiganya memastikan udara yang masuk ke paru-paru sudah hangat, lembab, dan bersih."
         ]
     },
     {
         id: 6,
-        text: "Harga 3 batang cokelat adalah Rp18.000,00. Sajikanlah informasi tersebut ke dalam sebuah tabel rasio yang menunjukkan harga untuk pembelian 1, 2, 4, dan 5 batang cokelat!",
-        indicator: "Menerapkan Representasi Proporsional",
-        subject: "Rasio",
-        cognitiveLevel: "C3",
+        text: "Perhatikan gambar berikut ini!\n\nAlveolus memiliki struktur dinding yang sangat tipis dan luas permukaan yang besar. Analisislah mengapa struktur seperti ini sangat krusial bagi proses difusi oksigen dibandingkan jika paru-paru hanya berbentuk kantong rata!\n\n(Ilustrasi: Alveolus memiliki luas permukaan besar karena bentuk bola-bola kecil yang melipatgandakan area pertukaran gas)",
+        indicator: "Analisis",
+        subject: "IPA",
+        cognitiveLevel: "C4",
         rubric: [
-            "Tabel Rasio: 1 cokelat = Rp6.000, 2 cokelat = Rp12.000, 4 cokelat = Rp24.000, 5 cokelat = Rp30.000",
-            "Siswa dapat menentukan harga satuan dan mengaliskan untuk kuantitas lainnya."
-        ]
+            "Struktur tipis dan luas mempercepat laju difusi gas sesuai hukum Fick.",
+            "Bentuk bola-bola alveolus melipatgandakan area pertukaran gas hingga puluhan meter persegi.",
+            "Luas ini krusial untuk mencukupi kebutuhan oksigen triliunan sel tubuh."
+        ],
+        image: "https://i.ibb.co.com/whpYFXbJ/6.jpg"
     },
     {
         id: 7,
-        text: "Sebuah mobil memerlukan 10 liter bahan bakar untuk menempuh jarak 120 km.\n\na. Tentukan jarak yang dapat ditempuh jika tersedia 5 liter, 15 liter dan 35 liter bahan bakar dengan memodelkannya menggunakan bentuk visualisasi yang menurutmu paling efektif (misalnya: tabel rasio, garis bilangan ganda, grafik, atau diagram)!\n\nb. Jelaskan alasan mengapa kamu memilih bentuk visualisasi tersebut!",
-        indicator: "Menerapkan Representasi Proporsional",
-        subject: "Rasio",
-        cognitiveLevel: "C3",
+        text: "Seorang pasien menderita Emfisema di mana dinding alveolusnya hancur dan bergabung menjadi satu ruang besar. Evaluasilah bagaimana kondisi ini mempengaruhi efisiensi pertukaran gas! Apakah pemberian oksigen dosis tinggi solusi tepat?\n\nPerintah:\nBerikan argumenmu!",
+        indicator: "Evaluasi",
+        subject: "IPA",
+        cognitiveLevel: "C5",
         rubric: [
-            "Visualisasi & Perhitungan: Siswa menemukan jarak 60 km (5L), 180 km (15L), dan 420 km (35L) menggunakan visual.",
-            "Garis Bilangan Ganda: Proporsi angka 5, 10, 15, 35 sejajar dengan 60, 120, 180, 420.",
-            "Tabel Rasio: Baris Liter dan Jarak dengan pola perkalian/pembagian konsisten.",
-            "Argumen Pemilihan: Alasan memilih visual (rapi, teratur, atau menunjukkan kenaikan konstan)."
+            "Menurunkan efisiensi karena luas permukaan difusi berkurang drastis.",
+            "Oksigen dosis tinggi tidak selalu tepat karena pada pasien kronis dapat menekan rangsangan pusat pernapasan (retensi CO2).",
+            "Solusi lebih tepat adalah terapi oksigen terkontrol dengan dosis yang dipantau ketat secara medis."
         ]
     },
     {
         id: 8,
-        text: "Pada sebuah denah rumah, tertera skala 1 : 100. Jika panjang ruang tamu pada denah tersebut adalah 4 cm, berapakah panjang sebenarnya dari ruang tamu tersebut dalam satuan meter?",
-        indicator: "Menyelesaikan Masalah Proporsional",
-        subject: "Rasio",
-        cognitiveLevel: "C3",
+        text: "Mengapa frekuensi pernapasan seseorang yang baru saja berlari cepat berbeda dengan orang yang sedang tidur? Jelaskan secara ilmiah hubungan aktivitas fisik, kebutuhan oksigen di otot, dan pembuangan CO2!",
+        indicator: "Eksplanasi",
+        subject: "IPA",
+        cognitiveLevel: "C4",
         rubric: [
-            "Interpretasi Skala: Siswa memahami skala 1:100 berarti 1 cm mewakili 100 cm.",
-            "Perhitungan: Panjang denah 4 cm x 100 = 400 cm.",
-            "Konversi Satuan: Mengubah 400 cm menjadi 4 meter.",
-            "Jawaban Akhir: Menjawab 4 meter dengan langkah yang tepat."
+            "Berlari meningkatkan laju respirasi seluler untuk energi.",
+            "Kebutuhan O2 naik untuk bakar glukosa, kadar CO2 naik sebagai sisa pembakaran.",
+            "Otak mendeteksi kenaikan keasaman darah (CO2 naik) dan memerintahkan paru bernapas lebih cepat."
         ]
     },
     {
         id: 9,
-        text: "Resep minuman lemon menggunakan perbandingan 8 buah jeruk dan 2 sendok gula. Jika kamu memiliki 16 buah jeruk, berapakah jumlah gula yang diperlukan agar rasa minuman tetap sama dengan takaran aslinya?",
-        indicator: "Menyelesaikan Masalah Proporsional",
-        subject: "Rasio",
-        cognitiveLevel: "C3",
+        text: "Vape dianggap lebih aman dari rokok tembakau. Evaluasilah pernyataan tersebut jika dikaitkan dengan risiko peradangan bronkiolus. Berikan penilaian kritis mengenai dampak jangka panjangnya terhadap kapasitas vital paru-paru!",
+        indicator: "Evaluasi",
+        subject: "IPA",
+        cognitiveLevel: "C5",
         rubric: [
-            "Identifikasi Rasio Awal: Siswa mengidentifikasi perbandingan 8 jeruk : 2 gula.",
-            "Strategi Multiplikatif: Siswa menyadari jumlah jeruk meningkat 2x lipat (8 menjadi 16).",
-            "Perhitungan: Mengalikan jumlah gula dengan faktor yang sama (2 x 2 = 4).",
-            "Jawaban Akhir: Menyebutkan 4 sendok gula dengan penjelasan yang logis."
+            "Anggapan keliru. Cairan vape (perasa, propilen glikol) menyebabkan peradangan pada bronkiolus (Popcorn Lung).",
+            "Dampak jangka panjang: terbentuknya jaringan parut yang menurunkan kapasitas vital secara permanen.",
+            "Menyebabkan paru menjadi kaku dan sulit mengembang."
         ]
     },
     {
         id: 10,
-        text: "Gelas A berisi 180 ml susu dan 6 sendok bubuk cokelat. Gelas B berisi 200 ml susu dan 10 sendok bubuk cokelat. Tentukan gelas manakah yang memiliki rasa cokelat paling pekat dengan membandingkan laju satuan susunya!",
-        indicator: "Menyelesaikan Masalah Proporsional",
-        subject: "Rasio",
-        cognitiveLevel: "C4",
+        text: "Jika tinggal di kota berpolusi tinggi, langkah praktis apa yang dapat kamu lakukan untuk menjaga kesehatan pernapasan? Evaluasilah kelebihan dan kekurangan penggunaan masker kain dibandingkan masker medis N95!",
+        indicator: "Self-Regulation",
+        subject: "IPA",
+        cognitiveLevel: "C6",
         rubric: [
-            "Laju Satuan Gelas A: Siswa membagi 180 / 6 = 30 ml per sendok.",
-            "Laju Satuan Gelas B: Siswa membagi 200 / 10 = 20 ml per sendok.",
-            "Komparasi Kepekatan: Siswa menyimpulkan Gelas B lebih pekat karena rasio susu per sendok cokelatnya lebih kecil (lebih sedikit susu untuk jumlah cokelat yang sama).",
-            "Jawaban Akhir: Gelas B dengan penjelasan perhitungan laju satuan yang benar."
+            "Langkah praktis: Masker, air purifier, tanaman pembersih udara.",
+            "Masker kain: murah/cuci ulang tapi pori besar (tak tahan PM2.5).",
+            "N95: efisiensi tinggi (95%) tapi mahal dan sulit napas jika lama."
         ]
     }
 ];
