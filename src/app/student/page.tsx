@@ -207,7 +207,7 @@ export default function StudentDashboard() {
                             </div>
                             <div className="text-left flex-1">
                                 <h3 className="font-bold text-slate-800 text-lg">1. Skala Persepsi atas model pembelajaran</h3>
-                                <p className="text-slate-500 text-sm">Berisi pertanyaan skala sikap 1-5.</p>
+                                <p className="text-slate-500 text-sm">Berisi pertanyaan skala sikap 1-4.</p>
                                 <div className="w-full bg-slate-100 h-2 rounded-full mt-3 overflow-hidden">
                                     <div className={`h-full ${isAngket1Done ? 'bg-green-500' : 'bg-primary'} transition-all duration-500`} style={{ width: `${angket1Progress}%` }}></div>
                                 </div>

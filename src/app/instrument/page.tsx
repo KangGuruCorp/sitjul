@@ -244,11 +244,10 @@ function InstrumentContent() {
                             {[
                                 { k: 'SS', v: 'Sangat Setuju' },
                                 { k: 'S', v: 'Setuju' },
-                                { k: 'R', v: 'Ragu-Ragu' },
                                 { k: 'TS', v: 'Tidak Setuju' },
-                                { k: 'STS', v: 'Sangat Tidak Setuju', span: true }
+                                { k: 'STS', v: 'Sangat Tidak Setuju' }
                             ].map((item) => (
-                                <div key={item.k} className={`bg-white p-2 rounded-lg border border-slate-200 flex items-center ${item.span ? 'col-span-2' : ''}`}>
+                                <div key={item.k} className={`bg-white p-2 rounded-lg border border-slate-200 flex items-center`}>
                                     <span className="font-bold text-slate-700 w-8 sm:w-12 inline-block">{item.k}</span>
                                     <span className="text-slate-600 truncate">= {item.v}</span>
                                 </div>
@@ -267,9 +266,8 @@ function InstrumentContent() {
                                     </p>
                                     <div className="flex justify-between items-center gap-2">
                                         {[
-                                            { val: 5, label: 'SS', desc: 'Sangat Setuju' },
-                                            { val: 4, label: 'S', desc: 'Setuju' },
-                                            { val: 3, label: 'R', desc: 'Ragu-Ragu' },
+                                            { val: 4, label: 'SS', desc: 'Sangat Setuju' },
+                                            { val: 3, label: 'S', desc: 'Setuju' },
                                             { val: 2, label: 'TS', desc: 'Tidak Setuju' },
                                             { val: 1, label: 'STS', desc: 'Sangat Tidak Setuju' }
                                         ].map((item) => (

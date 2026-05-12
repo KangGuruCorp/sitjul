@@ -155,8 +155,8 @@ export default function AdminDashboard() {
         return Object.entries(angkets).reduce((acc, [idx, val]) => {
             const index = Number(idx);
             if (index === 40) return acc; // Skip trap item from score
-            // Reverse scoring logic for negative items: point = 6 - original_value
-            const score = negativeIndices.includes(index) ? (6 - val) : val;
+            // Reverse scoring logic for negative items: point = 5 - original_value
+            const score = negativeIndices.includes(index) ? (5 - val) : val;
             return acc + score;
         }, 0);
     };
@@ -261,9 +261,9 @@ export default function AdminDashboard() {
         }
         // Sikap Ilmiah Q41 (idx 40): "pilihlah 'Sangat Setuju' (SS)" -> jawaban benar = 5
         if (s.angkets_2 && s.angkets_2[40] !== undefined) {
-            if (s.angkets_2[40] !== 5) {
+            if (s.angkets_2[40] !== 4) {
                 statsEfi.trap = "red";
-                issuesEfi.push(`Gagal Soal Jebakan (Sikap Ilmiah Q41): Menjawab ${s.angkets_2[40]}, seharusnya 5 (SS).`);
+                issuesEfi.push(`Gagal Soal Jebakan (Sikap Ilmiah Q41): Menjawab ${s.angkets_2[40]}, seharusnya 4 (SS).`);
             }
         }
 
@@ -316,8 +316,8 @@ export default function AdminDashboard() {
         }
 
         // === 5. SINKRONISASI / TRIANGULASI (-> Sikap Ilmiah) ===
-        const envMax = 200; // 40 items * 5
-        const efiMax = 200; // 40 items * 5
+        const envMax = 160; // 40 items * 4
+        const efiMax = 160; // 40 items * 4
         const envPct = envScore > 0 ? (envScore / envMax) * 100 : 0;
         const efiPct = efiScore > 0 ? (efiScore / efiMax) * 100 : 0;
 
@@ -392,7 +392,7 @@ export default function AdminDashboard() {
     // Helper for transformed score
     const getPoint = (val: number | undefined, index: number, negativeIndices: number[]) => {
         if (val === undefined) return undefined;
-        return negativeIndices.includes(index) ? (6 - val) : val;
+        return negativeIndices.includes(index) ? (5 - val) : val;
     };
 
     const exportExcel = () => {
@@ -521,9 +521,8 @@ export default function AdminDashboard() {
 
     const getCellColor = (val: number | undefined) => {
         if (!val) return 'text-slate-300';
-        if (val === 5) return 'bg-emerald-500 text-white font-bold';
-        if (val === 4) return 'bg-emerald-200 text-emerald-800 font-bold';
-        if (val === 3) return 'bg-amber-200 text-amber-800 font-bold';
+        if (val === 4) return 'bg-emerald-500 text-white font-bold';
+        if (val === 3) return 'bg-emerald-200 text-emerald-800 font-bold';
         if (val === 2) return 'bg-rose-200 text-rose-800 font-bold';
         return 'bg-rose-500 text-white font-bold';
     };
