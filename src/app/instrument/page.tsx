@@ -425,7 +425,18 @@ function InstrumentContent() {
 
                 <div id="essay-scroll-point" className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-slate-100 mb-8">
                     <div className="text-center mb-10 border-b-2 border-primary/20 pb-6">
-                        <h1 className="text-2xl font-bold text-primary">Berpikir Kritis IPA</h1>
+                        <h1 className="text-2xl font-bold text-primary">TES KEMAMPUAN BERPIKIR KRITIS IPA</h1>
+                        <p className="text-slate-500 font-bold mt-2 tracking-widest text-sm uppercase">SOAL VARIABEL Y</p>
+                    </div>
+
+                    <div className="bg-blue-50/50 p-6 rounded-2xl border border-blue-100 mb-8">
+                        <h3 className="font-bold text-primary mb-3 text-lg">PETUNJUK PENGERJAAN</h3>
+                        <ul className="text-slate-700 text-sm leading-relaxed space-y-2 list-disc list-inside">
+                            <li>Bacalah setiap soal dengan teliti.</li>
+                            <li>Sertakan alasan atau penjelasan ilmiah pada setiap jawaban.</li>
+                            <li>Gunakan konsep IPA yang telah dipelajari.</li>
+                        </ul>
+                        <p className="mt-4 font-bold text-primary/80 italic text-sm">Jawablah pertanyaan di bawah ini dengan kalimat yang benar dan jelas!</p>
                     </div>
 
                     <div className="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
@@ -560,7 +571,7 @@ function InstrumentContent() {
                             <span className="font-bold text-slate-800 block text-sm sm:text-base">
                                 {step === 1 && "Tahap 1: Persepsi Model Pembelajaran"}
                                 {step === 2 && "Tahap 2: Sikap Ilmiah"}
-                                {step === 3 && "Tahap 3: Berpikir Kritis IPA"}
+                                {step === 3 && "Tahap 3: Kemampuan Berpikir Kritis IPA"}
                             </span>
                             <span className="text-xs text-slate-500 font-medium mt-1 inline-block bg-slate-50 px-2 py-1 rounded-md">
                                 {step === 1 && `${Object.keys(angket1).length} dari ${PERSEPSI_MODEL_Q.reduce((a, b) => a + b.qs.length, 0)} terjawab`}

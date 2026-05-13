@@ -202,124 +202,122 @@ export interface EssayQuestion {
 export const ESSAY_QUESTIONS: EssayQuestion[] = [
     {
         id: 1,
-        text: "Perhatikan jalur udara saat kita menarik napas. Sebutkan organ-organ pernapasan yang dilewati udara secara berurutan mulai dari hidung hingga mencapai paru-paru! Mengapa urutan ini tidak boleh tertukar dalam menjalankan fungsinya?\n\nPerintah:\nSebutkan informasi utama dari hasil pengamatan tersebut!",
+        text: "Jelaskan pengertian sistem pernapasan manusia dan fungsinya bagi tubuh!",
+        indicator: "Interpretasi",
+        subject: "IPA",
+        cognitiveLevel: "C2",
+        rubric: [
+            "Sistem pernapasan adalah sekumpulan organ yang terlibat dalam proses pertukaran gas.",
+            "Fungsi utamanya adalah mengambil oksigen (O2) dari udara untuk metabolisme tubuh.",
+            "Fungsi lainnya adalah mengeluarkan karbon dioksida (CO2) sebagai sisa pembakaran sel."
+        ]
+    },
+    {
+        id: 2,
+        text: "Sebutkan organ-organ pernapasan manusia secara berurutan mulai dari hidung sampai paru-paru!",
         indicator: "Interpretasi",
         subject: "IPA",
         cognitiveLevel: "C2",
         rubric: [
             "Hidung -> Faring -> Laring -> Trakea -> Bronkus -> Bronkiolus -> Alveolus.",
-            "Urutan tidak boleh tertukar karena setiap organ memiliki fungsi pengkondisian udara progresif (menyaring, melembabkan, menghangatkan).",
-            "Jika tertukar, udara kotor atau bersuhu ekstrem dapat merusak jaringan paru-paru."
-        ]
-    },
-    {
-        id: 2,
-        text: "Seringkali orang menganggap bahwa 'bernapas' sama dengan 'respirasi seluler'. Jelaskan perbedaan mendasar antara keduanya dan bagaimana kedua proses tersebut saling mendukung dalam menghasilkan energi bagi tubuh!\n\nPerintah:\nJelaskan makna dari kedua hasil pengukuran tersebut!",
-        indicator: "Eksplanasi",
-        subject: "IPA",
-        cognitiveLevel: "C2",
-        rubric: [
-            "Bernapas (Ventilasi): Proses mekanis menghirup O2 dan menghembuskan CO2.",
-            "Respirasi Seluler: Proses kimiawi di dalam mitokondria sel untuk memecah glukosa menggunakan oksigen guna menghasilkan energi (ATP).",
-            "Hubungan: Bernapas menyediakan bahan baku (O2) yang dibutuhkan sel, sementara respirasi seluler adalah tujuan akhir mengapa kita bernapas."
+            "Urutan harus benar untuk menunjukkan pemahaman alur udara.",
+            "Setiap organ memiliki peran spesifik dalam menyaring atau menyalurkan udara."
         ]
     },
     {
         id: 3,
-        text: "Saat seseorang mengalami tersedak, jalur pernapasan terganggu. Analisislah peran epiglotis dalam sistem pernapasan dan pencernaan! Apa yang terjadi pada tekanan udara di paru-paru jika epiglotis gagal menutup saat kita menelan makanan?\n\nPerintah:\nAnalisislah perubahan yang terjadi dan jelaskan penyebabnya!",
-        indicator: "Analisis",
+        text: "Jelaskan bagaimana proses inspirasi terjadi pada manusia!",
+        indicator: "Eksplanasi",
         subject: "IPA",
-        cognitiveLevel: "C4",
+        cognitiveLevel: "C2",
         rubric: [
-            "Epiglotis berfungsi sebagai katup yang menutup trakea saat menelan agar makanan masuk ke esofagus.",
-            "Jika gagal, makanan masuk ke saluran napas (tersedak), mengganggu aliran udara.",
-            "Menyebabkan tekanan udara paru tidak stabil karena sumbatan benda asing."
+            "Otot diafragma berkontraksi (mendatar) dan otot antar tulang rusuk berkontraksi (tulang rusuk terangkat).",
+            "Volume rongga dada membesar, sehingga tekanan udara di dalam paru-paru mengecil.",
+            "Udara dari luar masuk ke dalam paru-paru karena perbedaan tekanan."
         ]
     },
     {
         id: 4,
-        text: "Bandingkan mekanisme pernapasan dada dan pernapasan perut. Jika otot diafragma seseorang mengalami kelumpuhan, analisislah dampaknya terhadap proses ekspirasi dan volume udara yang dapat dikeluarkan!\n\nPerintah:\nAnalisislah perubahan yang terjadi dan jelaskan penyebabnya!",
-        indicator: "Analisis",
+        text: "Jelaskan bagaimana proses ekspirasi terjadi pada manusia!",
+        indicator: "Eksplanasi",
         subject: "IPA",
-        cognitiveLevel: "C4",
+        cognitiveLevel: "C2",
         rubric: [
-            "Dampak kelumpuhan diafragma: Pernapasan perut terganggu.",
-            "Ekspirasi menjadi sulit dan tidak maksimal karena diafragma tidak bisa relaksasi/melengkung ke atas untuk mendorong udara keluar.",
-            "Volume udara sisa meningkat dan kapasitas vital menurun."
+            "Otot diafragma relaksasi (melengkung) dan otot antar tulang rusuk relaksasi (tulang rusuk turun).",
+            "Volume rongga dada mengecil, sehingga tekanan udara di dalam paru-paru membesar.",
+            "Udara dari dalam paru-paru terdorong keluar karena perbedaan tekanan."
         ]
     },
     {
         id: 5,
-        text: "Di daerah kutub yang bersuhu dingin, penduduknya tetap bisa bernapas dengan aman tanpa paru-parunya membeku. Simpulkan fungsi spesifik rambut hidung, lendir, dan pembuluh darah kapiler dalam mengondisikan udara tersebut!\n\nPerintah:\nNilailah pernyataan tersebut dan berikan alasan ilmiah yang mendukung jawabanmu!",
-        indicator: "Inferensi",
-        subject: "IPA",
-        cognitiveLevel: "C4",
-        rubric: [
-            "Rambut hidung: menyaring debu/partikel.",
-            "Lendir: melembabkan udara.",
-            "Kapiler: menghangatkan udara agar sesuai suhu tubuh.",
-            "Ketiganya memastikan udara yang masuk ke paru-paru sudah hangat, lembab, dan bersih."
-        ]
-    },
-    {
-        id: 6,
-        text: "Perhatikan gambar berikut ini!\n\nAlveolus memiliki struktur dinding yang sangat tipis dan luas permukaan yang besar. Analisislah mengapa struktur seperti ini sangat krusial bagi proses difusi oksigen dibandingkan jika paru-paru hanya berbentuk kantong rata!\n\n(Ilustrasi: Alveolus memiliki luas permukaan besar karena bentuk bola-bola kecil yang melipatgandakan area pertukaran gas)",
+        text: "Mengapa hidung memiliki peran penting dalam sistem pernapasan? Jelaskan fungsinya!",
         indicator: "Analisis",
         subject: "IPA",
         cognitiveLevel: "C4",
         rubric: [
-            "Struktur tipis dan luas mempercepat laju difusi gas sesuai hukum Fick.",
-            "Bentuk bola-bola alveolus melipatgandakan area pertukaran gas hingga puluhan meter persegi.",
-            "Luas ini krusial untuk mencukupi kebutuhan oksigen triliunan sel tubuh."
-        ],
-        image: "https://i.ibb.co.com/whpYFXbJ/6.jpg"
+            "Hidung menyaring udara dari debu dan kotoran menggunakan rambut hidung.",
+            "Hidung melembapkan udara yang masuk menggunakan selaput lendir.",
+            "Hidung mengatur suhu udara agar sesuai dengan suhu tubuh menggunakan pembuluh kapiler."
+        ]
+    },
+    {
+        id: 6,
+        text: "Jelaskan fungsi alveolus dalam proses pernapasan manusia!",
+        indicator: "Analisis",
+        subject: "IPA",
+        cognitiveLevel: "C4",
+        rubric: [
+            "Alveolus adalah tempat terjadinya pertukaran gas (O2 dan CO2) secara difusi.",
+            "Dindingnya yang tipis memudahkan oksigen masuk ke pembuluh darah.",
+            "Luas permukaannya yang besar memaksimalkan kapasitas penyerapan oksigen."
+        ]
     },
     {
         id: 7,
-        text: "Seorang pasien menderita Emfisema di mana dinding alveolusnya hancur dan bergabung menjadi satu ruang besar. Evaluasilah bagaimana kondisi ini mempengaruhi efisiensi pertukaran gas! Apakah pemberian oksigen dosis tinggi solusi tepat?\n\nPerintah:\nBerikan argumenmu!",
-        indicator: "Evaluasi",
+        text: "Sebutkan dua penyakit pada sistem pernapasan manusia dan jelaskan penyebabnya!",
+        indicator: "Inferensi",
         subject: "IPA",
-        cognitiveLevel: "C5",
+        cognitiveLevel: "C4",
         rubric: [
-            "Menurunkan efisiensi karena luas permukaan difusi berkurang drastis.",
-            "Oksigen dosis tinggi tidak selalu tepat karena pada pasien kronis dapat menekan rangsangan pusat pernapasan (retensi CO2).",
-            "Solusi lebih tepat adalah terapi oksigen terkontrol dengan dosis yang dipantau ketat secara medis."
+            "Penyakit 1 (misal Influenza): disebabkan oleh infeksi virus.",
+            "Penyakit 2 (misal Asma): disebabkan oleh penyempitan saluran napas (alergi/polusi).",
+            "Menyebutkan penyebab yang tepat untuk masing-masing penyakit."
         ]
     },
     {
         id: 8,
-        text: "Mengapa frekuensi pernapasan seseorang yang baru saja berlari cepat berbeda dengan orang yang sedang tidur? Jelaskan secara ilmiah hubungan aktivitas fisik, kebutuhan oksigen di otot, dan pembuangan CO2!",
-        indicator: "Eksplanasi",
+        text: "Jelaskan perbedaan antara pernapasan dada dan pernapasan perut!",
+        indicator: "Analisis",
         subject: "IPA",
         cognitiveLevel: "C4",
         rubric: [
-            "Berlari meningkatkan laju respirasi seluler untuk energi.",
-            "Kebutuhan O2 naik untuk bakar glukosa, kadar CO2 naik sebagai sisa pembakaran.",
-            "Otak mendeteksi kenaikan keasaman darah (CO2 naik) dan memerintahkan paru bernapas lebih cepat."
+            "Pernapasan dada menggunakan otot antar tulang rusuk.",
+            "Pernapasan perut menggunakan otot diafragma.",
+            "Keduanya menghasilkan perubahan volume rongga dada untuk menggerakkan udara."
         ]
     },
     {
         id: 9,
-        text: "Vape dianggap lebih aman dari rokok tembakau. Evaluasilah pernyataan tersebut jika dikaitkan dengan risiko peradangan bronkiolus. Berikan penilaian kritis mengenai dampak jangka panjangnya terhadap kapasitas vital paru-paru!",
-        indicator: "Evaluasi",
+        text: "Bagaimana proses pertukaran gas oksigen (O2) dan karbon dioksida (CO2) terjadi di paru-paru? Jelaskan!",
+        indicator: "Eksplanasi",
         subject: "IPA",
-        cognitiveLevel: "C5",
+        cognitiveLevel: "C2",
         rubric: [
-            "Anggapan keliru. Cairan vape (perasa, propilen glikol) menyebabkan peradangan pada bronkiolus (Popcorn Lung).",
-            "Dampak jangka panjang: terbentuknya jaringan parut yang menurunkan kapasitas vital secara permanen.",
-            "Menyebabkan paru menjadi kaku dan sulit mengembang."
+            "Terjadi melalui proses difusi di dalam alveolus.",
+            "Oksigen di alveolus berpindah ke pembuluh darah karena konsentrasi O2 di alveolus lebih tinggi.",
+            "Karbon dioksida di pembuluh darah berpindah ke alveolus untuk dibuang ke luar tubuh."
         ]
     },
     {
         id: 10,
-        text: "Jika tinggal di kota berpolusi tinggi, langkah praktis apa yang dapat kamu lakukan untuk menjaga kesehatan pernapasan? Evaluasilah kelebihan dan kekurangan penggunaan masker kain dibandingkan masker medis N95!",
+        text: "Sebutkan dan jelaskan cara-cara menjaga kesehatan sistem pernapasan manusia!",
         indicator: "Self-Regulation",
         subject: "IPA",
         cognitiveLevel: "C6",
         rubric: [
-            "Langkah praktis: Masker, air purifier, tanaman pembersih udara.",
-            "Masker kain: murah/cuci ulang tapi pori besar (tak tahan PM2.5).",
-            "N95: efisiensi tinggi (95%) tapi mahal dan sulit napas jika lama."
+            "Berolahraga secara teratur untuk melatih kapasitas paru-paru.",
+            "Menghindari paparan asap rokok dan polusi udara (menggunakan masker).",
+            "Mengonsumsi makanan bergizi dan istirahat yang cukup untuk menjaga daya tahan tubuh."
         ]
     }
 ];
