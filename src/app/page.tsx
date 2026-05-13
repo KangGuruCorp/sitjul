@@ -25,76 +25,111 @@ export default function StudentLogin() {
       let studentId = "";
       let existingData: any = null;
 
-      // 1. Try to find existing student in Firestore
-      if (db) {
+      // 1. FAST PATH: Check Local Storage First
+      const localDataStore = localStorage.getItem("localStudentsData");
+      const localStudents = localDataStore ? JSON.parse(localDataStore) : {};
+      const localMatch = Object.values(localStudents).find((s: any) =>
+        s.name === cleanName && s.school === cleanSchool
+      ) as any;
+
+      if (localMatch) {
+        studentId = localMatch.id;
+        existingData = localMatch;
+        console.log("Local match found, skipping initial cloud query for speed.");
+      } else if (db) {
+        // 2. CLOUD PATH: Only if not found locally, check cloud with timeout
+        console.log("No local match, checking cloud...");
         const q = query(
           collection(db, "students"),
           where("name", "==", cleanName),
           where("school", "==", cleanSchool)
         );
-        const querySnapshot = await getDocs(q);
 
-        if (!querySnapshot.empty) {
-          const docSnap = querySnapshot.docs[0];
-          studentId = docSnap.id;
-          existingData = docSnap.data();
-        }
-      }
-
-      // 2. If not found in cloud, check local (migration) or create new
-      if (!studentId) {
-        const localData = localStorage.getItem("localStudentsData");
-        const students = localData ? JSON.parse(localData) : {};
-        const localStudent = Object.values(students).find((s: any) =>
-          s.name === cleanName && s.school === cleanSchool
+        // Timeout promise to prevent infinite spinning
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error("Cloud timeout")), 8000)
         );
 
-        if (localStudent) {
-          studentId = (localStudent as any).id;
-          existingData = localStudent;
-        } else {
-          studentId = "std-" + Date.now();
-          existingData = {
-            id: studentId,
-            name: cleanName,
-            school: cleanSchool,
-            phone: phone.trim(),
-            createdAt: new Date().toISOString(),
-            status_progres: 0
-          };
-        }
+        try {
+          const querySnapshot = (await Promise.race([
+            getDocs(q),
+            timeoutPromise
+          ])) as any;
 
-        // Initial Sync to Cloud if new or migration
-        if (db) {
-          await setDoc(doc(db, "students", studentId), existingData);
+          if (!querySnapshot.empty) {
+            const docSnap = querySnapshot.docs[0];
+            studentId = docSnap.id;
+            existingData = docSnap.data();
+            console.log("Cloud match found.");
+          }
+        } catch (cloudErr) {
+          console.warn("Cloud check failed or timed out:", cloudErr);
+          // Continue to step 3 to create new if cloud fails
         }
-      } else if (db && phone.trim()) {
-        // If student exists but we have a phone number, update it (optional sync)
-        await setDoc(doc(db, "students", studentId), { phone: phone.trim() }, { merge: true });
       }
 
-      // 3. Save to Session/LocalStorage
+      // 3. FALLBACK: Create new if still not found
+      if (!studentId) {
+        console.log("Creating new student profile.");
+        studentId = "std-" + Date.now();
+        existingData = {
+          id: studentId,
+          name: cleanName,
+          school: cleanSchool,
+          phone: phone.trim(),
+          createdAt: new Date().toISOString(),
+          status_progres: 0
+        };
+
+        // Try to sync new doc to cloud in background (don't await if we want speed, 
+        // but await here for safety of initial creation)
+        if (db) {
+          try {
+            await Promise.race([
+              setDoc(doc(db, "students", studentId), existingData),
+              new Promise((_, reject) => setTimeout(() => reject(new Error("SetDoc timeout")), 5000))
+            ]);
+          } catch (err) {
+            console.warn("Initial cloud sync failed, will retry later.");
+          }
+        }
+      } else if (db && phone.trim() && phone.trim() !== existingData.phone) {
+        // Update phone if provided and different (background)
+        setDoc(doc(db, "students", studentId), { phone: phone.trim() }, { merge: true }).catch(console.error);
+      }
+
+      // 4. Finalize Session & Navigate
       sessionStorage.setItem("studentId", studentId);
       sessionStorage.setItem("studentName", cleanName);
       sessionStorage.setItem("studentSchool", existingData.school || cleanSchool);
+      
       if (phone.trim() || existingData.phone) {
         sessionStorage.setItem("studentPhone", phone.trim() || existingData.phone || "");
       }
-      localStorage.setItem(`start_${studentId}`, Date.now().toString());
+      
+      if (!localStorage.getItem(`start_${studentId}`)) {
+        localStorage.setItem(`start_${studentId}`, Date.now().toString());
+      }
 
-      const localData = localStorage.getItem("localStudentsData");
-      let students = localData ? JSON.parse(localData) : {};
-      students[studentId] = { 
-        ...existingData, 
+      // Update local cache
+      const updatedLocalData = localStorage.getItem("localStudentsData");
+      let students = updatedLocalData ? JSON.parse(updatedLocalData) : {};
+      students[studentId] = {
+        ...existingData,
         phone: phone.trim() || existingData.phone || "",
-        lastLogin: new Date().toISOString() 
+        lastLogin: new Date().toISOString()
       };
       localStorage.setItem("localStudentsData", JSON.stringify(students));
 
+      console.log("Login successful, navigating...");
       router.push("/student");
     } catch (error) {
-      console.error("Login error:", error);
-      alert("Terjadi kesalahan saat masuk. Silakan coba lagi.");
+      console.error("Login process error:", error);
+      alert("Terjadi kesalahan teknis. Namun Anda tetap dapat melanjutkan pengerjaan.");
+      // Even on error, if we have some data, try to push through
+      if (name && school) {
+          router.push("/student");
+      }
     } finally {
       setLoading(false);
     }
